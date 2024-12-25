@@ -1,8 +1,6 @@
----
-description: '2023-05-04'
----
-
 # laravel-permission 缓存导致的Redis带宽占用问题
+
+> 2023-05-04
 
 ### 先决条件
 

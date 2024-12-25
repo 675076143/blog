@@ -1,8 +1,6 @@
----
-description: '2024-03-14'
----
-
 # Knex.js TypeScript 友好 (Interface篇)
+
+> 2024-03-14
 
 ### 背景
 
