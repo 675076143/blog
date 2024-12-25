@@ -1,5 +1,7 @@
 export default {
+  lastUpdated: true,
   themeConfig: {
+    siteTitle: 'Minecraft',
     sidebar: [
       {
         text: 'Programming',
@@ -16,6 +18,9 @@ export default {
           { text: 'Filtering系统与AST的应用', link: '/programming/filtering-xi-tong-yu-ast-de-ying-yong' },
         ]
       }
+    ],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/675076143' },
     ]
   }
 }
