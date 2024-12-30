@@ -1,15 +1,15 @@
 <!--.vitepress/theme/MyLayout.vue-->
 <script setup>
-import DefaultTheme from 'vitepress/theme'
-import Comments from './Comments.vue';
+import DefaultTheme from "vitepress/theme";
+import Comments from "./Comments.vue";
 
-const { Layout } = DefaultTheme
+const { Layout } = DefaultTheme;
 </script>
 
 <template>
   <Layout>
     <template #doc-after>
-      <Comments />
+      <Comments style="padding-top: 24px" />
     </template>
   </Layout>
 </template>
