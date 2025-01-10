@@ -100,9 +100,126 @@ return [
 ];
 ```
 
+### Igbinary
+一开始在 database.php里尝试了 igbinary, 然而key大小并没有什么变化，依旧是1.6mb，所以就放弃了这个选项。
+```php
+<?php
+
+return [
+    'connections' => [
+      'redis' => [
+        'cache-compress' => [
+            'options' => [
+                'serializer' => \Redis::SERIALIZER_IGBINARY
+            ]
+        ],
+    ]
+];
+```
+今天重新研究了一下igbinary，发现 Redis 里存储的数据 既有php serialize的特征，也有 igbinary_serialize 的特征。
+
+🙄 下面是最简的重现步骤
+```php
+$input = ['a','b'];
+$key = 'SERIALIZER_IGBINARY';
+$redisClient = Redis::connection('cache-compress')->client();
+$redisClient->set($key, $input); // 单独使用 igbinary
+Cache::store('redis-compress')->put($key, $input); // 共同使用 php serialize 和 igbinary
+```
+直接使用 PhpRedis Client的时候，事情就如期望一样运作，但搭配 Laravel Cache 的时候，就不对劲了。
+
+翻了一源码，发现 Laravel 对 Redis 又包装了一个 Store, 在这个 Store里做了一次序列化处理
+
+https://github.com/laravel/framework/blob/8.x/src/Illuminate/Cache/RedisStore.php#L332
+
+```php
+protected function serialize($value)
+{
+    return is_numeric($value) && ! in_array($value, [INF, -INF]) && ! is_nan($value) ? $value : serialize($value);
+}
+```
+这就会导致，Laravel先对输入做 `serialize()`，然后再转交给 PhpRedis 再处理一次 `igbinary_serialize()`
+
+为了理解这个行为，可能要追溯到 Laravel 5.8 的版本，那时，官方选择的redis库是predis, predis是不处理序列化，序列化需要由程序自行完成。
+
+这个问题直到今天也没有解决，相关issue也只是从表面上解决了igbinary参数没有传递给redis，并没有解决laravel硬编码的序列化问题。
+
+https://github.com/laravel/framework/issues/44652
+
+解决办法有两个：
+
+1. 直接在php内完成, 也就是laravel目前的实现，将 serialize 函数变为 igbinary_serialize 即可
+
+2. 选择将动作交由PhpRedis完成，由于配置已经开启，直接 `return $value` 即可
+
+考虑到PhpRedis本身就已经是c实现的高性能库了，序列化仅仅只会额外增加一些负载，这里选择通过PhpRedis完成
+
+将 `laravel/framework/src/Illuminate/Cache/RedisStore.php `
+
+复制到 `app/overwrite/laravel/framework/src/Illuminate/Cache/RedisStore.php`
+
+重写 `serialize()` 和 `unserialize()`
+
+
+```php
+// gbinary是否开启
+protected $enableIgbinary = false;
+
+public function __construct(Redis $redis, $prefix = '', $connection = 'default')
+{
+    // blabla...
+    // 加载igbinary配置，判断开启
+    if ($this->connection()->client()->getOption(\Redis::OPT_SERIALIZER) === \Redis::SERIALIZER_IGBINARY) {
+        $this->enableIgbinary = true;
+    }
+}
+
+protected function serialize($value)
+{
+    if (is_numeric($value) && !in_array($value, [INF, -INF]) && !is_nan($value)) {
+        return $value;
+    }
+    if ($this->enableIgbinary) {
+        return $value;
+    }
+    return serialize($value);
+}
+
+protected function unserialize($value)
+{
+    if (is_numeric($value)) {
+        return $value;
+    }
+    if ($this->enableIgbinary) {
+        return $value;
+    }
+    return unserialize($value);
+}
+```
+
+通过 composer.json 替换处理
+```json
+{
+    "autoload": {
+        "exclude-from-classmap": [
+            "vendor/laravel/framework/src/Illuminate/Cache/RedisStore.php"
+        ],
+        "files": [
+            "app/overwrite/laravel/framework/src/Illuminate/Cache/RedisStore.php"
+        ]
+    },
+}
+```
+
 ### 最终效果
 
-**1.65mb** -> **200.96kb**
+默认: 1.69mb
+
+开启lz4: 205.96kb
+
+开启igbinary: 336kb
+
+👀 同时开启igbinary和lz4: 111.95kb 
 
 ![image](../assets/image%20(3).png)
 
