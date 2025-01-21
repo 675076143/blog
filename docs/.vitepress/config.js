@@ -6,6 +6,7 @@ export default {
       {
         text: 'Programming',
         items: [
+          { text: 'Excel导出图片的各类方案与利弊', link: '/programming/excel-dao-chu-tu-pian-de-ge-lei-fang-an-yu-li-bi' },
           { text: 'Laravel Schedule 优雅退出实现', link: '/programming/laravel-schedule-you-ya-tui-chu-shi-xian' },
           { text: 'Redis出口流量分析与压缩处理', link: '/programming/redis-chu-kou-liu-liang-fen-xi-yu-ya-suo-chu-li' },
           { text: '如何加载动态代码', link: '/programming/ru-he-jia-zai-dong-tai-dai-ma' },
