@@ -56,16 +56,6 @@ fetch('/auth/refresh', {
 
 若出现盗刷的情况（使用已使用过的，ua变化使用未使用的），则撤销所有的 AccessToken和RefreshToken, 强制要求用户重新登陆。
 
-## 浏览器多Tab
-Tab 1 使用 Access Token 1 简称 AT1, Cookie 中存放 Refresh Token 1 简称 RT1
-
-新开 Tab 2，使用 /auth/refresh 得到 AT2, RT2, 此时RT1过期
-Tab 1 AT1依然可用，当AT1过期时，Tab 1调用 /auth/refresh 浏览器会自动带上 RT2
-
-这个机制其实等同于客户端无法判断此刻是否用户已登陆，因为本质上一定需要 RT2 来得到新的 AT1
-
-也就是访问系统一定会调用一次 /auth/refreh, 如果失败则提示登录。本质上系统刚进入的时候, js是没有任何凭证的。
-
 ## 旧 Access Token 如何处理？
 
 很多 OAuth 实现／服务商／库 —— 出于安全考虑 —— 在 refresh 时同时 revoke 旧 access token +旧 refresh token（即“Refresh Token Rotation + 强制 Revoke” 模式）。这样可以确保当 refresh token 被盗或滥用时，旧 token 不再有效。这个设计是基于标准允许撤销机制 + 最小化 token 泄露风险。
