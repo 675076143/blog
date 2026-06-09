@@ -6,6 +6,7 @@ export default {
       {
         text: 'Programming',
         items: [
+          { text: '重生之路', link: '/programming/chong-sheng-zhi-lu' },
           { text: 'Access Token 和 Refresh Token', link: '/programming/access-token-and-refresh-token' },
           { text: 'Excel导出图片的各类方案与利弊', link: '/programming/excel-dao-chu-tu-pian-de-ge-lei-fang-an-yu-li-bi' },
           { text: 'Laravel Schedule 优雅退出实现', link: '/programming/laravel-schedule-you-ya-tui-chu-shi-xian' },
