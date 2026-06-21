@@ -1,29 +1,67 @@
 export default {
   lastUpdated: true,
   themeConfig: {
-    siteTitle: 'Minecraft',
+    siteTitle: "Minecraft",
     sidebar: [
       {
-        text: 'Programming',
+        text: "Programming",
         items: [
-          { text: '重生之路', link: '/programming/chong-sheng-zhi-lu' },
-          { text: 'Access Token 和 Refresh Token', link: '/programming/access-token-and-refresh-token' },
-          { text: 'Excel导出图片的各类方案与利弊', link: '/programming/excel-dao-chu-tu-pian-de-ge-lei-fang-an-yu-li-bi' },
-          { text: 'Laravel Schedule 优雅退出实现', link: '/programming/laravel-schedule-you-ya-tui-chu-shi-xian' },
-          { text: 'Redis出口流量分析与压缩处理', link: '/programming/redis-chu-kou-liu-liang-fen-xi-yu-ya-suo-chu-li' },
-          { text: '如何加载动态代码', link: '/programming/ru-he-jia-zai-dong-tai-dai-ma' },
-          { text: 'Php-fpm 多pool实践', link: '/programming/phpfpm-duo-pool-shi-jian' },
-          { text: 'Laravel Cache Tag 导致的大Key问题', link: '/programming/laravel-cache-tag-dao-zhi-de-da-key-wen-ti' },
-          { text: 'Knex.js TypeScript 友好 (Interface篇)', link: '/programming/knex.js-typescript-you-hao-interface-pian' },
-          { text: 'Hyperf Insert 性能问题', link: '/programming/hyperf-insert-xing-neng-wen-ti' },
-          { text: 'Mysql 使用 Prepared Statements 导致的性能问题', link: '/programming/mysql-shi-yong-prepared-statements-dao-zhi-de-xing-neng-wen-ti' },
-          { text: 'laravel-permission 缓存导致的Redis带宽占用问题', link: '/programming/laravelpermission-huan-cun-dao-zhi-de-redis-dai-kuan-zhan-yong-wen-ti' },
-          { text: 'Filtering系统与AST的应用', link: '/programming/filtering-xi-tong-yu-ast-de-ying-yong' },
-        ]
-      }
+          { text: "重生之路", link: "/programming/chong-sheng-zhi-lu" },
+          {
+            text: "Access Token 和 Refresh Token",
+            link: "/programming/access-token-and-refresh-token",
+          },
+          {
+            text: "Excel导出图片的各类方案与利弊",
+            link: "/programming/excel-dao-chu-tu-pian-de-ge-lei-fang-an-yu-li-bi",
+          },
+          {
+            text: "Laravel Schedule 优雅退出实现",
+            link: "/programming/laravel-schedule-you-ya-tui-chu-shi-xian",
+          },
+          {
+            text: "Redis出口流量分析与压缩处理",
+            link: "/programming/redis-chu-kou-liu-liang-fen-xi-yu-ya-suo-chu-li",
+          },
+          {
+            text: "如何加载动态代码",
+            link: "/programming/ru-he-jia-zai-dong-tai-dai-ma",
+          },
+          {
+            text: "Php-fpm 多pool实践",
+            link: "/programming/phpfpm-duo-pool-shi-jian",
+          },
+          {
+            text: "Laravel Cache Tag 导致的大Key问题",
+            link: "/programming/laravel-cache-tag-dao-zhi-de-da-key-wen-ti",
+          },
+          {
+            text: "Knex.js TypeScript 友好 (Interface篇)",
+            link: "/programming/knex.js-typescript-you-hao-interface-pian",
+          },
+          {
+            text: "Hyperf Insert 性能问题",
+            link: "/programming/hyperf-insert-xing-neng-wen-ti",
+          },
+          {
+            text: "Mysql 使用 Prepared Statements 导致的性能问题",
+            link: "/programming/mysql-shi-yong-prepared-statements-dao-zhi-de-xing-neng-wen-ti",
+          },
+          {
+            text: "laravel-permission 缓存导致的Redis带宽占用问题",
+            link: "/programming/laravelpermission-huan-cun-dao-zhi-de-redis-dai-kuan-zhan-yong-wen-ti",
+          },
+          {
+            text: "Filtering系统与AST的应用",
+            link: "/programming/filtering-xi-tong-yu-ast-de-ying-yong",
+          },
+          {
+            text: "一个搜索框的史诗",
+            link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi",
+          },
+        ],
+      },
     ],
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/675076143' },
-    ]
-  }
-}
+    socialLinks: [{ icon: "github", link: "https://github.com/675076143" }],
+  },
+};
