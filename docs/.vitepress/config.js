@@ -6,6 +6,10 @@ export default {
       {
         text: "Programming",
         items: [
+          {
+            text: "一个搜索框的思考",
+            link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi",
+          },
           { text: "重生之路", link: "/programming/chong-sheng-zhi-lu" },
           {
             text: "Access Token 和 Refresh Token",
@@ -54,10 +58,6 @@ export default {
           {
             text: "Filtering系统与AST的应用",
             link: "/programming/filtering-xi-tong-yu-ast-de-ying-yong",
-          },
-          {
-            text: "一个搜索框的史诗",
-            link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi",
           },
         ],
       },
