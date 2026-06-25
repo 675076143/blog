@@ -66,6 +66,49 @@
 
 用户输入 `status:passing` 而不是 `Status:Passing`，不应该报错。全链路做了大小写不敏感处理——输入和选项匹配时统一 `toLowerCase`，输出还是用规范的 label 和 value。
 
+### 跨字段值联想
+
+用户知道值但不知道字段名怎么办？比如记得 "Passing" 这个状态值，但不记得字段叫 "Status"。
+
+传统做法：用户先搜 "Passing"（自由文本），发现结果不对，再退回去找出字段名。
+
+这里做了反向联想：在用户输入字段名阶段（`filterName`），同时搜索所有 select/multiSelect 的选项值。输入 `Pass` 时，下拉框显示 `Status:Passing`、`Grade:Pass` 等跨字段建议。用户直接选中，不需要知道字段叫什么。
+
+和缩写（`st:pass`）的区别：缩写是知道字段名后的效率工具；跨字段联想是连字段名都不知道时的发现机制。
+
+### Tab 键智能补全
+
+只有一个选项时，用户先用 ↓ 激活再按 Tab 才能选中——多了一步。
+
+改成：如果过滤后只剩一个有效建议，Tab 直接选中，省去 ArrowDown。用户连续操作时的节奏不会被额外按键打断。
+
+同时在建议列表底部加了键盘提示（中英双语）：
+
+- `空格 → 下一个条件` / `Space → next filter`
+- `逗号 → 添加值` / `, → add value`
+
+提示不占交互区域，用户一看就懂，不需要翻文档。
+
+### 智能占位符
+
+占位符的意义是让用户知道"这里能做什么"。固定写 `Search...` 太笼统。
+
+改成从 chipConfigs 自动生成——取前 4 个配置，按类型取第一个选项值或 `xxx:...` 格式拼成示例：
+
+```
+Search or try: Status:Pending, #urgent, @Robin, SKU:...
+```
+
+用户还没输入就看到可用字段和值的示例，相当于零成本的入门引导。配置变了占位符自动更新，不用手动维护。
+
+### Select 类型的选择行为
+
+选了 select 值之后，下一个字符接在值后面，没有空格——比如选了 `Status:Passing` 继续打字变成 `Status:PassingPending`。
+
+原因：`supportsMultiValue` 把 `select` 也纳入了多值逻辑，认为用户可能还要通过逗号加更多值。但 `select` 是单选，选中就应该结束。
+
+把 `select` 从多值判断中移出后，选完自动加空格，继续输入的条件自然会独立到下一个 token。问题出在类型语义搞混了——`multiSelect` 支持多值，`select` 不支持，代码没体现这个区别。
+
 ---
 
 ## 怎么让新手上手
@@ -105,11 +148,9 @@
 
 ### 方案一：表单式筛选（下拉框 + 日期选择器 + 复选框）
 
-最传统的做法，几乎每个后台都在用。
+最传统的做法，几乎每个后台都在用。比如 Ant Design Pro 的 QueryFilter：
 
-```
-[状态 ▼] [部门 ▼] [日期 📅] [☑ 仅看异常] [搜索]
-```
+![](../assets/antd-filter-form.png)
 
 **优点**：直观，新手零学习成本，每个控件的含义一目了然。
 
@@ -126,9 +167,7 @@
 
 一个搜索框，后端做模糊匹配。
 
-```
-[🔍 搜索...]
-```
+![](../assets/google-search.png)
 
 **优点**：UI 极简，开发成本低。
 
@@ -144,13 +183,7 @@
 
 电商常见的模式：左侧搜索框 + 右侧分面导航。
 
-```
-[🔍 搜索...]                    品牌 ▼
-                                价格 ▼
-结果列表:                        评分 ▼
-  商品A                         分类 ▼
-  商品B
-```
+![](../assets/amazon-faceted-search.png)
 
 **优点**：搜索和筛选共存，分面统计（"品牌A 有 23 件"）帮助用户决策。
 
@@ -166,9 +199,7 @@
 
 Linear、Raycast、shadcn/ui 的 [cmdk](https://cmdk.paco.me/) 用的模式。
 
-```
-按 ⌘K → 弹出搜索框 → 输入命令 → 执行
-```
+![](../assets/cmdk-command-palette.png)
 
 **优点**：键盘友好，模糊匹配，可以跳转 + 执行操作。
 
@@ -184,9 +215,7 @@ Linear、Raycast、shadcn/ui 的 [cmdk](https://cmdk.paco.me/) 用的模式。
 
 GitHub Issues 和 Gmail 用的模式：搜索框支持 `key:value` 语法。
 
-```
-is:open label:bug author:robin created:>2024-01-01
-```
+![](../assets/github-issues-search.png)
 
 **优点**：表达力强，一行文字可以表达复杂查询，键盘友好。
 
@@ -202,9 +231,7 @@ is:open label:bug author:robin created:>2024-01-01
 
 试图结合方案一（直观）、方案四（键盘友好）和方案五（表达力），同时解决各自的缺点：
 
-```
-[🔍 Status:Passing -Status:Pending Orders:>=100 #urgent]
-```
+![](../assets/filter-chip-bar-demo.png)
 
 | 特性     | 表单式     | 全文搜索 | Faceted  | 命令面板 | GitHub 语法 | FilterChipBar |
 | -------- | ---------- | -------- | -------- | -------- | ----------- | ------------- |
