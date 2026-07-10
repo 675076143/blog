@@ -59,6 +59,10 @@ export default {
             text: "Filtering系统与AST的应用",
             link: "/programming/filtering-xi-tong-yu-ast-de-ying-yong",
           },
+          {
+            text: "给 LLM 建一个知识库",
+            link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku",
+          },
         ],
       },
     ],
