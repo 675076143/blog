@@ -53,6 +53,8 @@ yay -S xpad-beitong-dkms
 
 内核更新后 DKMS 会自动重建模块。
 
+**注意：这是临时方案。** 补丁已由作者提交到 linux-input 邮件列表（v3，2026-07-17），review 通过后将合入主线。预计 Linux 7.3 或后续 rc 版本会包含此修复，届时 DKMS 包即可弃用，直接升级内核即可。
+
 ## 后记
 
 这个问题的排查花了很长时间，因为一开始方向错了。usbmon 显示 USB 层 `SET_CONFIGURATION` 重配置，很容易以为是 USB xHCI 驱动的兼容性问题。但实际上 disconnect 是固件主动触发的，不是 USB 核心层的 bug。
