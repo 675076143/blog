@@ -4,6 +4,7 @@ import path from "path";
 const postsDir = path.resolve(__dirname, "../programming");
 
 const posts = [
+  { text: "北通手柄 Linux USB 断连排查与修复", link: "/programming/bei-tong-shou-bing-linux-usb-duan-lian-pai-cha" },
   { text: "一个搜索框的思考", link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi" },
   { text: "重生之路", link: "/programming/chong-sheng-zhi-lu" },
   { text: "Access Token 和 Refresh Token", link: "/programming/access-token-and-refresh-token" },
