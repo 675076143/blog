@@ -1,8 +1,3 @@
-import fs from "fs";
-import path from "path";
-
-const postsDir = path.resolve(__dirname, "../programming");
-
 const posts = [
   { text: "给 LLM 建一个知识库", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
   { text: "我是怎么放弃 RAG 和 MCP 的", link: "/programming/wo-shi-zen-yang-fang-qi-mcp-de" },
@@ -24,17 +19,6 @@ const posts = [
   { text: "laravel-permission 缓存导致的Redis带宽占用问题", link: "/programming/laravelpermission-huan-cun-dao-zhi-de-redis-dai-kuan-zhan-yong-wen-ti" },
   { text: "Filtering系统与AST的应用", link: "/programming/filtering-xi-tong-yu-ast-de-ying-yong" },
 ];
-
-const sorted = posts
-  .map((post) => {
-    const slug = post.link.split("/").pop();
-    const filePath = path.join(postsDir, `${slug}.md`);
-    const mtime = fs.existsSync(filePath)
-      ? fs.statSync(filePath).mtimeMs
-      : 0;
-    return { ...post, mtime };
-  })
-  .sort((a, b) => b.mtime - a.mtime);
 
 export default {
   lastUpdated: true,
@@ -66,7 +50,7 @@ export default {
       },
       {
         text: "Programming",
-        items: sorted,
+        items: posts,
       },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/675076143" }],
