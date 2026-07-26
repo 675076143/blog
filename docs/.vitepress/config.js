@@ -39,6 +39,15 @@ export default {
     siteTitle: "Minecraft",
     sidebar: [
       {
+        text: "Linux",
+        items: [
+          { text: "Pacman 更新后系统进入应急模式", link: "/programming/pacman-geng-xin-jin-ru-ying-ji-mo-shi" },
+          { text: "Linux 浏览器选择对比", link: "/programming/linux-liu-lan-qi-xuan-ze-dui-bi" },
+          { text: "Linux Docker 替代方案对比", link: "/programming/linux-docker-ti-dai-fang-an-dui-bi" },
+          { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
+        ],
+      },
+      {
         text: "Programming",
         items: sorted,
       },
