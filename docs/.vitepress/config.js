@@ -40,6 +40,7 @@ export default {
           { text: "北通手柄 Linux USB 断连排查与修复", link: "/programming/bei-tong-shou-bing-linux-usb-duan-lian-pai-cha" },
           { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
           { text: "Linux 浏览器选择对比", link: "/programming/linux-liu-lan-qi-xuan-ze-dui-bi" },
+          { text: "Hyprland 的 HDR 桌面为什么不发灰", link: "/programming/hyprland-hdr-bu-fa-hui-de-yuan-li" },
           { text: "Linux Docker 替代方案对比", link: "/programming/linux-docker-ti-dai-fang-an-dui-bi" },
           { text: "Pacman 更新后系统进入应急模式", link: "/programming/pacman-geng-xin-jin-ru-ying-ji-mo-shi" },
           { text: "独立双系统物理隔离安装方案", link: "/programming/du-li-shuang-xi-tong-wu-li-ge-li" },
