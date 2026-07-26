@@ -4,7 +4,6 @@ import path from "path";
 const postsDir = path.resolve(__dirname, "../programming");
 
 const posts = [
-  { text: "北通手柄 Linux USB 断连排查与修复", link: "/programming/bei-tong-shou-bing-linux-usb-duan-lian-pai-cha" },
   { text: "一个搜索框的思考", link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi" },
   { text: "重生之路", link: "/programming/chong-sheng-zhi-lu" },
   { text: "Access Token 和 Refresh Token", link: "/programming/access-token-and-refresh-token" },
@@ -41,10 +40,11 @@ export default {
       {
         text: "Linux",
         items: [
-          { text: "Pacman 更新后系统进入应急模式", link: "/programming/pacman-geng-xin-jin-ru-ying-ji-mo-shi" },
+          { text: "北通手柄 Linux USB 断连排查与修复", link: "/programming/bei-tong-shou-bing-linux-usb-duan-lian-pai-cha" },
+          { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
           { text: "Linux 浏览器选择对比", link: "/programming/linux-liu-lan-qi-xuan-ze-dui-bi" },
           { text: "Linux Docker 替代方案对比", link: "/programming/linux-docker-ti-dai-fang-an-dui-bi" },
-          { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
+          { text: "Pacman 更新后系统进入应急模式", link: "/programming/pacman-geng-xin-jin-ru-ying-ji-mo-shi" },
         ],
       },
       {
