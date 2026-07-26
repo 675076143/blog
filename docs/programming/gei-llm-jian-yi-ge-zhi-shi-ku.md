@@ -175,7 +175,8 @@ LLM 会读取原始报告，提炼核心内容，添加 frontmatter，更新交�
 
 用了一段时间后，知识库会自动增长。LLM 在回答问题时会主动查询知识库，找到相关内容后引用：
 
-> 根据知识库中的 `hologres-peak-hour-diagnosis` 记录，CPM Monitor 的 8 次串行查询是高峰期连接池紧张的主因...
+> 根据知识库中的 `hologres-peak-hour-diagnosis` 记录，CPM Monitor 的 8 次串行查询是高峰期连接池紧张的主因。
+
 
 这种"引用知识库"的行为是自动的，不需要人工干预。
 
