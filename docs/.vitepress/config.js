@@ -2,8 +2,6 @@ const posts = [
   { text: "给 LLM 建一个知识库", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
   { text: "我是怎么放弃 RAG 和 MCP 的", link: "/programming/wo-shi-zen-yang-fang-qi-mcp-de" },
   { text: "PHP-FPM SIGSEGV 故障排查实录", link: "/programming/php-fpm-sigsegv-pai-cha" },
-  { text: "Hologres 499 超时根因分析", link: "/programming/hologres-499-chao-shi-gen-yin-fen-xi" },
-  { text: "Hologres 高负载诊断", link: "/programming/hologres-mo-shi-fen-zhong-gao-fu-zai-zhen-duan" },
   { text: "一个搜索框的思考", link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi" },
   { text: "重生之路", link: "/programming/chong-sheng-zhi-lu" },
   { text: "Access Token 和 Refresh Token", link: "/programming/access-token-and-refresh-token" },
