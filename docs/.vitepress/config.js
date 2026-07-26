@@ -4,6 +4,7 @@ import path from "path";
 const postsDir = path.resolve(__dirname, "../programming");
 
 const posts = [
+  { text: "给 LLM 建一个知识库", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
   { text: "我是怎么放弃 RAG 和 MCP 的", link: "/programming/wo-shi-zen-yang-fang-qi-mcp-de" },
   { text: "PHP-FPM SIGSEGV 故障排查实录", link: "/programming/php-fpm-sigsegv-pai-cha" },
   { text: "Hologres 499 超时根因分析", link: "/programming/hologres-499-chao-shi-gen-yin-fen-xi" },
@@ -43,7 +44,6 @@ export default {
       {
         text: "Self-host",
         items: [
-          { text: "给 LLM 建一个知识库", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
           { text: "自建漫画图书服务器选型", link: "/programming/zi-jian-man-hua-tu-shu-fu-wu-qi-dui-bi" },
           { text: "Local LLM 迁移选型", link: "/programming/local-llm-qian-yi-qwen3" },
           { text: "Linux Jellyfin 桌面客户端选型", link: "/programming/linux-jellyfin-ke-hu-duan-dui-bi" },
