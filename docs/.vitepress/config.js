@@ -19,9 +19,24 @@ const posts = [
 ];
 
 export default {
+  title: "ROBIN.EXE",
+  description: "Linux、后端工程与折腾记录",
+  lang: "zh-CN",
   lastUpdated: true,
+  cleanUrls: true,
   themeConfig: {
-    siteTitle: "Minecraft",
+    siteTitle: "ROBIN.EXE",
+    nav: [
+      { text: "HOME", link: "/" },
+      { text: "BLOG", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
+      { text: "ABOUT", link: "/about" },
+    ],
+    outline: { label: "本页地图", level: [2, 3] },
+    lastUpdatedText: "最后更新",
+    docFooter: { prev: "上一条记录", next: "下一条记录" },
+    returnToTopLabel: "返回顶部",
+    sidebarMenuLabel: "文章目录",
+    darkModeSwitchLabel: "切换配色",
     sidebar: [
       {
         text: "Self-host",

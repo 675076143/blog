@@ -7,12 +7,12 @@ Personal blog built with VitePress 1.5, deployed to Vercel. Content is in Chines
 ## Commands
 
 ```bash
-yarn dev      # dev server at localhost, watches docs/
-yarn build    # production build → docs/.vitepress/dist/
-yarn serve    # preview production build locally
+pnpm dev      # dev server at localhost, watches docs/
+pnpm build    # production build → docs/.vitepress/dist/
+pnpm serve    # preview production build locally
 ```
 
-Uses **yarn** (lockfile is `yarn.lock`). No lint, typecheck, or test commands exist.
+Uses **pnpm** (lockfile is `pnpm-lock.yaml`). No lint, typecheck, or test commands exist.
 
 ## Structure
 
