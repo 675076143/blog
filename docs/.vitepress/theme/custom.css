@@ -709,8 +709,10 @@ html[data-blog-theme="zelda"] .pixel-kicker {
   border-bottom: 1px solid #716747;
   box-shadow: none;
   letter-spacing: .2em;
+  font-size: 0;
 }
-html[data-blog-theme="zelda"] .pixel-kicker::before { content: "— "; color: #716747; }
+html[data-blog-theme="zelda"] .pixel-kicker::before { content: "— "; color: #716747; font-size: 11px; }
+html[data-blog-theme="zelda"] .pixel-kicker::after { content: "HYRULE COMPENDIUM // ADVENTURE LOG  ◇"; color: #c8a95a; font-size: 11px; }
 html[data-blog-theme="zelda"] .pixel-title {
   color: #eee4c7;
   font-family: Georgia, "Noto Serif SC", serif;
@@ -720,7 +722,17 @@ html[data-blog-theme="zelda"] .pixel-title {
   letter-spacing: -.045em;
   text-shadow: 0 4px 0 #050a07;
 }
-html[data-blog-theme="zelda"] .pixel-title span { color: #c8a95a; text-shadow: 0 4px 0 #382e16; }
+html[data-blog-theme="zelda"] .pixel-title { font-size: 0; }
+html[data-blog-theme="zelda"] .pixel-title::after {
+  content: "COURAGE.\A WISDOM.\A POWER.";
+  display: block;
+  white-space: pre;
+  color: #eee4c7;
+  font-size: clamp(3.8rem, 6.8vw, 6rem);
+  line-height: .92;
+  text-shadow: 0 4px 0 #050a07;
+}
+html[data-blog-theme="zelda"] .pixel-title span { display: none; }
 html[data-blog-theme="zelda"] .pixel-intro { color: #b6ad91; line-height: 1.9; }
 html[data-blog-theme="zelda"] .pixel-button {
   color: #d8cda9 !important;
@@ -1101,6 +1113,7 @@ html[data-blog-theme="zelda"] .master-sword-image {
   height: 300px;
   object-fit: contain;
   filter: drop-shadow(0 15px 13px rgba(0,0,0,.5));
+  animation: master-sword-awaken 1.15s cubic-bezier(.2,.8,.2,1) both;
 }
 html[data-blog-theme="zelda"] .hyrule-relic::after {
   content: "";
@@ -1164,7 +1177,6 @@ html[data-blog-theme="zelda"] .relic-caption {
   font: 700 8px var(--vp-font-family-mono);
   letter-spacing: .16em;
 }
-html[data-blog-theme="zelda"] .pixel-kicker::after { content: "  ◇"; color: #65c8c9; }
 html[data-blog-theme="zelda"] .pixel-card { position: relative; overflow: hidden; }
 html[data-blog-theme="zelda"] .pixel-card::after {
   content: "";
@@ -1178,13 +1190,20 @@ html[data-blog-theme="zelda"] .pixel-card::after {
 }
 html[data-blog-theme="zelda"] .pixel-card:nth-child(2)::after { border-color: rgba(200,169,90,.18); }
 @keyframes sheikah-gem { 0%,100% { opacity: .68; } 50% { opacity: 1; } }
+@keyframes master-sword-awaken { from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(20px); } to { opacity: .9; clip-path: inset(0); transform: translateY(0); } }
+html[data-blog-theme="zelda"] .pixel-card { animation: hyrule-log-arrive .65s ease-out both; }
+html[data-blog-theme="zelda"] .pixel-card:nth-child(2) { animation-delay: .08s; }
+html[data-blog-theme="zelda"] .pixel-card:nth-child(3) { animation-delay: .16s; }
+@keyframes hyrule-log-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 html[data-blog-theme="zelda"] .block-showcase { animation: hyrule-relic-drift 8s ease-in-out infinite; }
 html[data-blog-theme="zelda"] .block-showcase::before { animation: hyrule-rune-breathe 3.6s steps(3, end) infinite; }
 @keyframes hyrule-relic-drift { 0%,100% { transform: translateY(2px) rotate(2deg); } 50% { transform: translateY(-6px) rotate(1deg); } }
 @keyframes hyrule-rune-breathe { 0%,100% { opacity: .72; text-shadow: 0 3px 0 #382e16; } 50% { opacity: 1; text-shadow: 0 3px 0 #382e16, 0 0 15px rgba(200,169,90,.28); } }
 @media (prefers-reduced-motion: reduce) {
   html[data-blog-theme="zelda"] .block-showcase,
-  html[data-blog-theme="zelda"] .block-showcase::before { animation: none; }
+  html[data-blog-theme="zelda"] .block-showcase::before,
+  html[data-blog-theme="zelda"] .master-sword-image,
+  html[data-blog-theme="zelda"] .pixel-card { animation: none; }
 }
 html[data-blog-theme="tiga"] .lens-wing,
 html[data-blog-theme="tiga"] .lens-crown,
