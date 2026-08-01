@@ -1,74 +1,86 @@
-/* ROBIN.EXE — a readable 8-bit theme inspired by classic platform games */
+/* ROBIN.EXE — a readable block-world theme */
 :root {
   --vp-font-family-base: Inter, "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
   --vp-font-family-mono: "JetBrains Mono", "Cascadia Code", monospace;
-  --vp-c-brand-1: #e52521;
-  --vp-c-brand-2: #b91d1a;
-  --vp-c-brand-3: #43b047;
-  --vp-c-brand-soft: rgba(251, 208, 0, 0.22);
-  --vp-c-bg: #eaf4ff;
-  --vp-c-bg-alt: #d5e9ff;
-  --vp-c-bg-elv: #fff8dc;
-  --vp-c-bg-soft: #ffedb3;
-  --vp-c-text-1: #25170d;
-  --vp-c-text-2: #5a3a24;
-  --vp-c-divider: #8b4513;
-  --mario-sky: #5c94fc;
-  --mario-red: #e52521;
-  --mario-yellow: #fbd000;
-  --mario-green: #43b047;
-  --mario-brown: #8b4513;
-  --mario-cream: #fff8dc;
-  --pixel-shadow: 4px 4px 0 #8b4513;
-  --pixel-border: 2px solid #8b4513;
+  --block-font: "JetBrains Mono", "Cascadia Code", monospace;
+  --vp-c-brand-1: #3f7f45;
+  --vp-c-brand-2: #315f36;
+  --vp-c-brand-3: #55a85d;
+  --vp-c-brand-soft: rgba(63, 127, 69, 0.13);
+  --vp-c-bg: #f1f0eb;
+  --vp-c-bg-alt: #e4e3dd;
+  --vp-c-bg-elv: #faf9f4;
+  --vp-c-bg-soft: #e8e6de;
+  --vp-c-text-1: #292b29;
+  --vp-c-text-2: #5d625d;
+  --vp-c-divider: #92958f;
+  --mario-sky: #78a7d1;
+  --mario-red: #80624a;
+  --mario-yellow: #d4ae43;
+  --mario-green: #4f8f49;
+  --mario-brown: #6e5542;
+  --mario-cream: #faf9f4;
+  --pixel-shadow: 4px 4px 0 #807d75;
+  --pixel-border: 2px solid #777a75;
 }
 
 .dark {
-  --vp-c-brand-1: #ff5a4f;
-  --vp-c-brand-2: #fbd000;
-  --vp-c-brand-3: #55c759;
-  --vp-c-brand-soft: rgba(251, 208, 0, 0.16);
-  --vp-c-bg: #101b3d;
-  --vp-c-bg-alt: #182452;
-  --vp-c-bg-elv: #24275a;
-  --vp-c-bg-soft: #302b63;
-  --vp-c-text-1: #fff8dc;
-  --vp-c-text-2: #d7d5e8;
-  --vp-c-divider: #fbd000;
-  --mario-sky: #182452;
-  --mario-red: #ff5a4f;
-  --mario-yellow: #fbd000;
-  --mario-green: #55c759;
-  --mario-brown: #a75b32;
-  --mario-cream: #fff8dc;
-  --pixel-shadow: 4px 4px 0 #05091d;
-  --pixel-border: 2px solid #fbd000;
+  --vp-c-brand-1: #75b978;
+  --vp-c-brand-2: #9fd3a1;
+  --vp-c-brand-3: #4f8f52;
+  --vp-c-brand-soft: rgba(117, 185, 120, 0.12);
+  --vp-c-bg: #202421;
+  --vp-c-bg-alt: #292e2a;
+  --vp-c-bg-elv: #303531;
+  --vp-c-bg-soft: #363b37;
+  --vp-c-text-1: #e6e6df;
+  --vp-c-text-2: #aeb3ad;
+  --vp-c-divider: #656b65;
+  --mario-sky: #405a6d;
+  --mario-red: #98765b;
+  --mario-yellow: #c4a54b;
+  --mario-green: #679f63;
+  --mario-brown: #735b48;
+  --mario-cream: #e6e6df;
+  --pixel-shadow: 4px 4px 0 #101310;
+  --pixel-border: 2px solid #686d68;
 }
 
 html { image-rendering: pixelated; }
 
 body {
   background-color: var(--vp-c-bg);
-  background-image:
-    linear-gradient(rgba(92, 148, 252, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(92, 148, 252, 0.06) 1px, transparent 1px);
-  background-size: 8px 8px;
+  background-image: none;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0, 0, 0, 0.025) 3px 4px);
+body::after { display: none; }
+
+/* The landing page becomes a blocky overworld; articles stay stone-neutral. */
+body:has(.pixel-home) {
+  --vp-c-text-1: #eef2ed;
+  --vp-c-text-2: #aeb8ae;
+  background-color: #242824;
+  background-image: url("/assets/minecraft/deepslate_tiles.png");
+  background-size: 64px 64px;
+  background-blend-mode: multiply;
+  background-attachment: fixed;
 }
+
+.dark body:has(.pixel-home) {
+  background-color: #202420;
+  background-image: url("/assets/minecraft/deepslate_tiles.png");
+}
+
+body:has(.pixel-home)::after { display: none; }
 
 .VPNavBar {
-  border-bottom: 4px solid var(--mario-brown) !important;
-  background: color-mix(in srgb, var(--mario-red) 94%, transparent) !important;
-  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #3e453f !important;
+  background: var(--vp-c-bg) !important;
+  backdrop-filter: none;
 }
+
+.VPNavBar .content,
+.VPNavBar.has-sidebar .title { background: var(--vp-c-bg) !important; }
 
 .VPNavBar .title,
 .VPNavBarMenuLink,
@@ -82,69 +94,116 @@ body::after {
 .vp-doc h2,
 .vp-doc h3,
 .pixel-label {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--block-font);
   font-weight: 800;
   letter-spacing: -0.03em;
 }
 
-.VPNavBarTitle .title::before { content: "■ "; color: var(--mario-yellow); }
-.VPNavBarMenuLink:hover { color: var(--mario-yellow) !important; text-shadow: 2px 2px 0 var(--mario-brown); }
+.VPNavBarTitle .title::before { content: "▦ "; color: #b8d59c; }
+.VPNavBarMenuLink:hover { color: #d7edc4 !important; text-shadow: 2px 2px 0 #315b34; }
 
 .VPSidebar {
-  border-right: 3px solid var(--mario-brown);
-  background: color-mix(in srgb, var(--vp-c-bg-alt) 94%, transparent) !important;
-  background-image: linear-gradient(90deg, transparent 31px, rgba(139, 69, 19, .08) 32px) !important;
-  background-size: 32px 16px !important;
+  border-right: 1px solid #454a45;
+  background: #1d211e !important;
+  background-image: none !important;
 }
+
+.VPSidebarItem.level-0 { padding-bottom: 10px; }
+.VPSidebarItem.level-0 + .VPSidebarItem.level-0 { margin-top: 18px; padding-top: 18px; border-top: 1px solid #414641; }
+.VPSidebarItem.level-1 .text { color: #9fa49f; font-size: 13px; line-height: 1.55; }
+.VPSidebarItem.level-1.is-active > .item .link > .text { color: #86ba80; }
 
 .VPSidebarItem.level-0 > .item > .text::before { content: "◆ "; color: var(--mario-green); }
 .VPSidebarItem.level-0 > .item > .text::after { content: ""; }
 
-.vp-doc h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; }
+.vp-doc h1 { max-width: 780px; font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1.18; letter-spacing: -.045em; }
 .vp-doc h1::after {
-  content: "_";
-  color: var(--vp-c-brand-1);
-  animation: pixel-blink 1s steps(1) infinite;
+  content: "";
+  animation: none;
 }
-.vp-doc h2 { border-top: 0; border-bottom: 2px dashed var(--vp-c-divider); padding-bottom: 10px; }
-.vp-doc h2::before { content: "■ "; color: var(--mario-red); }
+.vp-doc h2 { margin-top: 48px; border-top: 0; border-bottom: 1px solid #555a55; padding-bottom: 10px; font-size: 1.55rem; }
+.vp-doc h2::before { content: "▦ "; color: var(--mario-green); }
 .vp-doc h3::before { content: "▶ "; color: var(--mario-green); }
 
 .vp-doc a { text-decoration: none; border-bottom: 2px solid var(--vp-c-brand-1); }
-.vp-doc a:hover { color: #25170d; background: var(--mario-yellow); border-color: var(--mario-brown); }
-.vp-doc blockquote { border: var(--pixel-border); box-shadow: var(--pixel-shadow); padding: 14px 18px; background: var(--vp-c-bg-elv); }
-.vp-doc div[class*="language-"] { border: var(--pixel-border); border-radius: 0; box-shadow: var(--pixel-shadow); }
+.vp-doc a:hover { color: #142f32; background: #72c8cf; border-color: #397f86; }
+.vp-doc blockquote { border: 1px solid #5b615b; border-left: 4px solid #5c9658; box-shadow: none; padding: 12px 18px; background: var(--vp-c-bg-elv); }
+.vp-doc > blockquote:first-of-type { display: table; width: auto !important; margin: 4px 0 18px; border: 0; border-left: 3px solid #5c9658; padding: 3px 10px; color: var(--vp-c-text-2); background: transparent; font: 700 12px var(--vp-font-family-mono); }
+.vp-doc > blockquote:first-of-type p { margin: 0; }
+.vp-doc div[class*="language-"] { border: 1px solid #555a55; border-radius: 0; box-shadow: 3px 3px 0 rgba(0,0,0,.25); }
 .vp-doc :not(pre) > code { border: 1px solid var(--vp-c-brand-1); border-radius: 0; }
-.vp-doc table { display: table; width: 100%; border: var(--pixel-border); box-shadow: var(--pixel-shadow); }
+.vp-doc table { display: table; width: 100%; border: 1px solid #606560; box-shadow: none; }
 .vp-doc th { background: var(--vp-c-brand-soft); }
 
-.VPDoc .content-container { max-width: 820px !important; }
+.VPDoc .content-container { max-width: 860px !important; }
+.VPDoc .content { padding: 0 28px 64px; }
 .VPDocFooter { border-top: 2px dashed var(--vp-c-divider); }
-.VPDocFooter .pager-link { border: var(--pixel-border); border-radius: 0; box-shadow: var(--pixel-shadow); }
-.VPDocFooter .pager-link:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #020708; }
+.VPDocFooter .pager-link { border: 1px solid #555b55; border-radius: 0; box-shadow: none; background: var(--vp-c-bg-elv); }
+.VPDocFooter .pager-link:hover { transform: translate(2px, 2px); border-color: #6e9d6b; box-shadow: none; }
 
-.pixel-home { max-width: 1120px; margin: 0 auto; padding: 72px 24px 48px; }
-.pixel-kicker { display: inline-block; padding: 5px 10px; color: #25170d; background: var(--mario-yellow); border: 2px solid var(--mario-brown); box-shadow: 3px 3px 0 var(--mario-brown); font-family: var(--vp-font-family-mono); font-weight: 800; }
-.pixel-title { max-width: 820px; margin: 16px 0; font-family: var(--vp-font-family-mono); font-size: clamp(3rem, 10vw, 7rem); line-height: .9; letter-spacing: -.08em; }
-.pixel-title span { color: var(--mario-red); text-shadow: 4px 4px 0 var(--mario-yellow); }
-.pixel-intro { max-width: 650px; color: var(--vp-c-text-2); font-size: 1.1rem; line-height: 1.8; }
-.pixel-actions { display: flex; flex-wrap: wrap; gap: 16px; margin: 32px 0 64px; }
-.pixel-button { border: var(--pixel-border) !important; padding: 10px 18px; color: var(--vp-c-text-1) !important; background: var(--vp-c-bg-elv); box-shadow: var(--pixel-shadow); font-family: var(--vp-font-family-mono); font-weight: 800; }
-.pixel-button.primary { color: #fff8dc !important; background: var(--mario-red); }
-.pixel-button:not(.primary) { background: var(--mario-yellow); color: #25170d !important; }
-.pixel-button:hover { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #020708; }
-.pixel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.pixel-card { position: relative; border: var(--pixel-border); padding: 24px; background: var(--vp-c-bg-elv); box-shadow: var(--pixel-shadow); }
-.pixel-card:nth-child(1) { border-top: 8px solid var(--mario-red); }
-.pixel-card:nth-child(2) { border-top: 8px solid var(--mario-green); }
-.pixel-card:nth-child(3) { border-top: 8px solid var(--mario-yellow); }
-.pixel-card::before { content: "? " attr(data-slot); position: absolute; top: -15px; right: 12px; padding: 2px 8px; color: #25170d; background: var(--mario-yellow); border: 2px solid var(--mario-brown); font: 700 12px var(--vp-font-family-mono); }
+.VPDocAsideOutline .outline-title { font-family: var(--vp-font-family-mono); font-size: 12px; }
+.VPDocAsideOutline .outline-link { color: #929892; font-size: 12px; line-height: 1.5; }
+.VPDocAsideOutline .outline-link.active { color: #80b27c; }
+
+.pixel-home { max-width: 1120px; margin: 0 auto; padding: 28px 24px 88px; }
+.craft-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 72px; padding-bottom: 16px; border-bottom: 2px solid #4b514c; font: 800 12px var(--block-font); }
+.craft-nav a { color: #b6c0b7; text-decoration: none; }
+.craft-nav > div { display: flex; gap: 28px; }
+.craft-nav > div a:hover { color: #91c38d; }
+.craft-brand { display: inline-flex; align-items: center; gap: 9px; color: #edf1ec !important; font-size: 14px; letter-spacing: .04em; }
+.brand-block { width: 16px; height: 16px; background: url("/assets/minecraft/grass_block_side.png") center / cover; border: 1px solid #101510; image-rendering: pixelated; }
+.craft-hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); align-items: center; gap: 72px; }
+.craft-copy { min-width: 0; }
+.pixel-kicker { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; color: #a7d3a3; background: #1b251e; border: 2px solid #4e6852; box-shadow: 3px 3px 0 #090d0a; font-family: var(--block-font); font-size: 12px; font-weight: 800; }
+.pixel-kicker::before { content: ""; width: 7px; height: 7px; background: #76b36f; box-shadow: 0 0 10px rgba(118,179,111,.6); }
+.pixel-title { max-width: 680px; margin: 20px 0; font-family: var(--block-font); font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; line-height: .88; letter-spacing: -.07em; }
+.pixel-title { color: #f0f3ef; text-shadow: 4px 4px 0 #090d0a; }
+.dark .pixel-title { color: var(--vp-c-text-1); text-shadow: 2px 2px 0 rgba(0,0,0,.3); }
+.pixel-title span { color: #79b873; text-shadow: 3px 3px 0 #29452b; }
+.pixel-intro { max-width: 650px; color: #aeb8ae; font-size: 1.1rem; line-height: 1.8; text-shadow: none; }
+.dark .pixel-intro { color: var(--vp-c-text-2); }
+.pixel-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 0; }
+.pixel-button { min-width: 142px; border: 2px solid #566259 !important; padding: 11px 18px; color: #dfe6df !important; background: #202822; box-shadow: inset 2px 2px 0 rgba(255,255,255,.08), inset -2px -2px 0 rgba(0,0,0,.35), 4px 4px 0 #080b09; font-family: var(--block-font), "Noto Sans SC", sans-serif; font-size: 13px; font-weight: 800; text-align: center; }
+.pixel-button.primary { color: #f3f7f2 !important; background: #477f48; border-color: #65a765 !important; }
+.pixel-button:not(.primary) { color: #cbd4cb !important; background: #1b211d; }
+.pixel-button:hover { transform: translate(2px, 2px); border-color: #75b475 !important; box-shadow: inset 2px 2px 0 rgba(255,255,255,.08), inset -2px -2px 0 rgba(0,0,0,.35), 2px 2px 0 #080b09; }
+.block-showcase { position: relative; width: 330px; height: 330px; justify-self: end; }
+.showcase-block { position: absolute; display: block; width: 144px; height: 144px; border: 4px solid #090d0a; image-rendering: pixelated; box-shadow: 10px 10px 0 rgba(0,0,0,.38); }
+.block-grass { top: 16px; right: 26px; z-index: 3; background: url("/assets/minecraft/grass_block_side.png") center / 100% 100%; }
+.block-stone { top: 142px; right: 142px; z-index: 1; background: url("/assets/minecraft/stone.png") center / 100% 100%; filter: brightness(.82); }
+.block-diamond { top: 164px; right: 0; z-index: 2; width: 116px; height: 116px; background: url("/assets/minecraft/diamond_ore.png") center / 100% 100%; }
+.block-caption { position: absolute; left: 10px; bottom: 0; color: #929a93; font: 800 10px var(--block-font); letter-spacing: .08em; }
+.pixel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 88px; }
+.pixel-card { position: relative; border: 2px solid #455149; padding: 82px 24px 26px; background: rgba(28,36,31,.94); box-shadow: inset 2px 2px 0 rgba(255,255,255,.035), 5px 5px 0 #090d0a; transition: none; }
+.pixel-card:hover { transform: translate(2px, 2px); border-color: #719074; background: #222d26; box-shadow: inset 2px 2px 0 rgba(255,255,255,.035), 3px 3px 0 #090d0a; }
+.pixel-card:nth-child(1), .pixel-card:nth-child(2), .pixel-card:nth-child(3) { border-top-width: 5px; }
+.pixel-card::before { content: attr(data-slot); position: absolute; top: 22px; right: 22px; padding: 0; color: #737b74; background: transparent; border: 0; font: 800 11px var(--block-font); }
+.pixel-card h2 { color: #ecf0eb; text-shadow: 2px 2px 0 #090d0a; }
+.pixel-card p { color: #9fa9a0; }
+.pixel-label::before { content: "["; color: #708b73; }
+.pixel-label::after { content: "]"; color: #708b73; }
 .pixel-card h2 { margin: 6px 0 12px; border: 0; font-size: 1.25rem; }
 .pixel-card p { margin: 0; color: var(--vp-c-text-2); line-height: 1.7; }
+
+.voxel-icon { position: absolute; top: 18px; left: 24px; width: 44px; height: 44px; border: 3px solid #202620; box-shadow: inset 2px 2px 0 rgba(255,255,255,.16), inset -2px -2px 0 rgba(0,0,0,.28), 3px 3px 0 #090d0a; image-rendering: pixelated; }
+.grass-block {
+  background: url("/assets/minecraft/grass_block_side.png") center / 100% 100% no-repeat;
+}
+.stone-block {
+  background: url("/assets/minecraft/stone.png") center / 100% 100% no-repeat;
+}
+.diamond-block {
+  background: url("/assets/minecraft/diamond_ore.png") center / 100% 100% no-repeat;
+}
 
 @keyframes pixel-blink { 50% { opacity: 0; } }
 @media (max-width: 760px) {
   .pixel-home { padding-top: 44px; }
+  .craft-nav { margin-bottom: 48px; }
+  .craft-nav > div { gap: 14px; }
+  .craft-nav > div a:last-child { display: none; }
+  .craft-hero { grid-template-columns: 1fr; gap: 44px; }
+  .block-showcase { width: 280px; height: 270px; justify-self: center; transform: scale(.85); transform-origin: top center; margin-bottom: -34px; }
   .pixel-grid { grid-template-columns: 1fr; }
   body::after { display: none; }
 }

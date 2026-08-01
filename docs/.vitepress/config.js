@@ -1,8 +1,8 @@
 const posts = [
-  { text: "给 LLM 建一个知识库", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
   { text: "我是怎么放弃 RAG 和 MCP 的", link: "/programming/wo-shi-zen-yang-fang-qi-mcp-de" },
   { text: "PHP-FPM SIGSEGV 故障排查实录", link: "/programming/php-fpm-sigsegv-pai-cha" },
-  { text: "一个搜索框的思考", link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi" },
+  { text: "给 LLM 建一个知识库", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
+  { text: "FilterChipBar：一个搜索框的思考", link: "/programming/yi-ge-sou-suo-kuang-de-shi-shi" },
   { text: "重生之路", link: "/programming/chong-sheng-zhi-lu" },
   { text: "Access Token 和 Refresh Token", link: "/programming/access-token-and-refresh-token" },
   { text: "Excel导出图片的各类方案与利弊", link: "/programming/excel-dao-chu-tu-pian-de-ge-lei-fang-an-yu-li-bi" },
@@ -40,6 +40,7 @@ export default {
     sidebar: [
       {
         text: "Self-host",
+        collapsed: true,
         items: [
           { text: "自建漫画图书服务器选型", link: "/programming/zi-jian-man-hua-tu-shu-fu-wu-qi-dui-bi" },
           { text: "Local LLM 迁移选型", link: "/programming/local-llm-qian-yi-qwen3" },
@@ -51,19 +52,22 @@ export default {
       },
       {
         text: "Linux",
+        collapsed: true,
         items: [
-          { text: "北通手柄 Linux USB 断连排查与修复", link: "/programming/bei-tong-shou-bing-linux-usb-duan-lian-pai-cha" },
+          { text: "Linux HDR 折腾记", link: "/programming/linux-hdr-tale" },
+          { text: "Hyprland 的 HDR 桌面为什么不发灰", link: "/programming/hyprland-hdr-bu-fa-hui-de-yuan-li" },
           { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
           { text: "Linux 浏览器选择对比", link: "/programming/linux-liu-lan-qi-xuan-ze-dui-bi" },
-          { text: "Hyprland 的 HDR 桌面为什么不发灰", link: "/programming/hyprland-hdr-bu-fa-hui-de-yuan-li" },
           { text: "Linux Docker 替代方案对比", link: "/programming/linux-docker-ti-dai-fang-an-dui-bi" },
           { text: "Pacman 更新后系统进入应急模式", link: "/programming/pacman-geng-xin-jin-ru-ying-ji-mo-shi" },
           { text: "独立双系统物理隔离安装方案", link: "/programming/du-li-shuang-xi-tong-wu-li-ge-li" },
           { text: "Clash Verge 局域网连接被防火墙拦截", link: "/programming/clash-verge-lan-fang-huo-qiang-jie-huo" },
+          { text: "北通手柄 Linux USB 断连排查与修复", link: "/programming/bei-tong-shou-bing-linux-usb-duan-lian-pai-cha" },
         ],
       },
       {
         text: "Programming",
+        collapsed: true,
         items: posts,
       },
     ],
