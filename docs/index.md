@@ -5,6 +5,8 @@ description: Linux、后端工程与折腾记录
 ---
 
 <div class="pixel-home">
+  <TigaCanvas />
+  <ThemeSwitcher />
   <nav class="craft-nav" aria-label="主导航">
     <a class="craft-brand" href="/"><span class="brand-block"></span> ROBIN.EXE</a>
     <div><a href="/programming/gei-llm-jian-yi-ge-zhi-shi-ku">BLOG</a><a href="/about">ABOUT</a><a href="https://github.com/675076143">GITHUB</a></div>
@@ -20,6 +22,15 @@ description: Linux、后端工程与折腾记录
       </div>
     </div>
     <div class="block-showcase" aria-hidden="true">
+      <span class="hyrule-relic">
+        <img class="master-sword-image" src="/assets/zelda/master-sword.png" alt="" width="1024" height="1536" />
+        <span class="relic-caption">THE SWORD THAT SEALS THE DARKNESS</span>
+        <a class="master-sword-credit" href="https://sketchfab.com/3d-models/legend-of-zelda-master-sword-cb7f91aa8594406ea6fc7cb72846743b">3D: Voldepreuss · CC BY</a>
+      </span>
+      <span class="spark-lens">
+        <img class="spark-lens-image" src="/assets/tiga/sparklence.webp" alt="" width="480" height="720" />
+        <a class="spark-lens-credit" href="https://sketchfab.com/3d-models/the-sparklence-89411f4fc92c415291bc831e1fdb4a5c">3D: Ahbangkun · CC BY</a>
+      </span>
       <span class="showcase-block block-grass"></span>
       <span class="showcase-block block-stone"></span>
       <span class="showcase-block block-diamond"></span>

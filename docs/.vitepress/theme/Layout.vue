@@ -2,6 +2,8 @@
 <script setup>
 import DefaultTheme from "vitepress/theme";
 import Comments from "./Comments.vue";
+import ThemeSwitcher from "./ThemeSwitcher.vue";
+import TigaCanvas from "./TigaCanvas.vue";
 
 const { Layout } = DefaultTheme;
 </script>
@@ -12,4 +14,6 @@ const { Layout } = DefaultTheme;
       <Comments style="padding-top: 24px" />
     </template>
   </Layout>
+  <TigaCanvas />
+  <ThemeSwitcher />
 </template>

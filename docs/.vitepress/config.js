@@ -22,6 +22,7 @@ export default {
   title: "ROBIN.EXE",
   description: "Linux、后端工程与折腾记录",
   lang: "zh-CN",
+  head: [["script", {}, "try{document.documentElement.dataset.blogTheme=localStorage.getItem('blog-theme')||'minecraft'}catch(e){}"]],
   lastUpdated: true,
   cleanUrls: true,
   themeConfig: {
