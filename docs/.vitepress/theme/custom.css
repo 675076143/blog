@@ -1,36 +1,48 @@
-/* ROBIN.EXE — readable 8-bit theme */
+/* ROBIN.EXE — a readable 8-bit theme inspired by classic platform games */
 :root {
   --vp-font-family-base: Inter, "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
   --vp-font-family-mono: "JetBrains Mono", "Cascadia Code", monospace;
-  --vp-c-brand-1: #087f5b;
-  --vp-c-brand-2: #0ca678;
-  --vp-c-brand-3: #12b886;
-  --vp-c-brand-soft: rgba(18, 184, 134, 0.14);
-  --vp-c-bg: #f4f0dd;
-  --vp-c-bg-alt: #e9e4ca;
-  --vp-c-bg-elv: #fffced;
-  --vp-c-bg-soft: #e9e4ca;
-  --vp-c-text-1: #17282b;
-  --vp-c-text-2: #3d5555;
-  --vp-c-divider: #17282b;
-  --pixel-shadow: 4px 4px 0 #17282b;
-  --pixel-border: 2px solid #17282b;
+  --vp-c-brand-1: #e52521;
+  --vp-c-brand-2: #b91d1a;
+  --vp-c-brand-3: #43b047;
+  --vp-c-brand-soft: rgba(251, 208, 0, 0.22);
+  --vp-c-bg: #eaf4ff;
+  --vp-c-bg-alt: #d5e9ff;
+  --vp-c-bg-elv: #fff8dc;
+  --vp-c-bg-soft: #ffedb3;
+  --vp-c-text-1: #25170d;
+  --vp-c-text-2: #5a3a24;
+  --vp-c-divider: #8b4513;
+  --mario-sky: #5c94fc;
+  --mario-red: #e52521;
+  --mario-yellow: #fbd000;
+  --mario-green: #43b047;
+  --mario-brown: #8b4513;
+  --mario-cream: #fff8dc;
+  --pixel-shadow: 4px 4px 0 #8b4513;
+  --pixel-border: 2px solid #8b4513;
 }
 
 .dark {
-  --vp-c-brand-1: #55efc4;
-  --vp-c-brand-2: #2ed6a1;
-  --vp-c-brand-3: #16a77d;
-  --vp-c-brand-soft: rgba(85, 239, 196, 0.14);
-  --vp-c-bg: #0b1518;
-  --vp-c-bg-alt: #101f23;
-  --vp-c-bg-elv: #14272b;
-  --vp-c-bg-soft: #14272b;
-  --vp-c-text-1: #e5f8e9;
-  --vp-c-text-2: #a8c9c1;
-  --vp-c-divider: #55efc4;
-  --pixel-shadow: 4px 4px 0 #020708;
-  --pixel-border: 2px solid #55efc4;
+  --vp-c-brand-1: #ff5a4f;
+  --vp-c-brand-2: #fbd000;
+  --vp-c-brand-3: #55c759;
+  --vp-c-brand-soft: rgba(251, 208, 0, 0.16);
+  --vp-c-bg: #101b3d;
+  --vp-c-bg-alt: #182452;
+  --vp-c-bg-elv: #24275a;
+  --vp-c-bg-soft: #302b63;
+  --vp-c-text-1: #fff8dc;
+  --vp-c-text-2: #d7d5e8;
+  --vp-c-divider: #fbd000;
+  --mario-sky: #182452;
+  --mario-red: #ff5a4f;
+  --mario-yellow: #fbd000;
+  --mario-green: #55c759;
+  --mario-brown: #a75b32;
+  --mario-cream: #fff8dc;
+  --pixel-shadow: 4px 4px 0 #05091d;
+  --pixel-border: 2px solid #fbd000;
 }
 
 html { image-rendering: pixelated; }
@@ -38,8 +50,8 @@ html { image-rendering: pixelated; }
 body {
   background-color: var(--vp-c-bg);
   background-image:
-    linear-gradient(rgba(85, 239, 196, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(85, 239, 196, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(92, 148, 252, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92, 148, 252, 0.06) 1px, transparent 1px);
   background-size: 8px 8px;
 }
 
@@ -53,10 +65,15 @@ body::after {
 }
 
 .VPNavBar {
-  border-bottom: var(--pixel-border) !important;
-  background: color-mix(in srgb, var(--vp-c-bg) 92%, transparent) !important;
+  border-bottom: 4px solid var(--mario-brown) !important;
+  background: color-mix(in srgb, var(--mario-red) 94%, transparent) !important;
   backdrop-filter: blur(12px);
 }
+
+.VPNavBar .title,
+.VPNavBarMenuLink,
+.VPNavBarSocialLinks,
+.VPNavBarAppearance { color: #fff8dc !important; }
 
 .VPNavBarTitle .title,
 .VPNavBarMenuLink,
@@ -70,16 +87,18 @@ body::after {
   letter-spacing: -0.03em;
 }
 
-.VPNavBarTitle .title::before { content: "▰ "; color: var(--vp-c-brand-1); }
-.VPNavBarMenuLink:hover { color: var(--vp-c-brand-1); text-shadow: 2px 2px 0 var(--vp-c-brand-soft); }
+.VPNavBarTitle .title::before { content: "■ "; color: var(--mario-yellow); }
+.VPNavBarMenuLink:hover { color: var(--mario-yellow) !important; text-shadow: 2px 2px 0 var(--mario-brown); }
 
 .VPSidebar {
-  border-right: 1px dashed color-mix(in srgb, var(--vp-c-divider) 55%, transparent);
+  border-right: 3px solid var(--mario-brown);
   background: color-mix(in srgb, var(--vp-c-bg-alt) 94%, transparent) !important;
+  background-image: linear-gradient(90deg, transparent 31px, rgba(139, 69, 19, .08) 32px) !important;
+  background-size: 32px 16px !important;
 }
 
-.VPSidebarItem.level-0 > .item > .text::before { content: "[ "; color: var(--vp-c-brand-1); }
-.VPSidebarItem.level-0 > .item > .text::after { content: " ]"; color: var(--vp-c-brand-1); }
+.VPSidebarItem.level-0 > .item > .text::before { content: "◆ "; color: var(--mario-green); }
+.VPSidebarItem.level-0 > .item > .text::after { content: ""; }
 
 .vp-doc h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; }
 .vp-doc h1::after {
@@ -88,11 +107,11 @@ body::after {
   animation: pixel-blink 1s steps(1) infinite;
 }
 .vp-doc h2 { border-top: 0; border-bottom: 2px dashed var(--vp-c-divider); padding-bottom: 10px; }
-.vp-doc h2::before { content: "# "; color: var(--vp-c-brand-1); }
-.vp-doc h3::before { content: "> "; color: var(--vp-c-brand-1); }
+.vp-doc h2::before { content: "■ "; color: var(--mario-red); }
+.vp-doc h3::before { content: "▶ "; color: var(--mario-green); }
 
 .vp-doc a { text-decoration: none; border-bottom: 2px solid var(--vp-c-brand-1); }
-.vp-doc a:hover { color: var(--vp-c-bg); background: var(--vp-c-brand-1); }
+.vp-doc a:hover { color: #25170d; background: var(--mario-yellow); border-color: var(--mario-brown); }
 .vp-doc blockquote { border: var(--pixel-border); box-shadow: var(--pixel-shadow); padding: 14px 18px; background: var(--vp-c-bg-elv); }
 .vp-doc div[class*="language-"] { border: var(--pixel-border); border-radius: 0; box-shadow: var(--pixel-shadow); }
 .vp-doc :not(pre) > code { border: 1px solid var(--vp-c-brand-1); border-radius: 0; }
@@ -105,17 +124,21 @@ body::after {
 .VPDocFooter .pager-link:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #020708; }
 
 .pixel-home { max-width: 1120px; margin: 0 auto; padding: 72px 24px 48px; }
-.pixel-kicker { color: var(--vp-c-brand-1); font-family: var(--vp-font-family-mono); font-weight: 800; }
+.pixel-kicker { display: inline-block; padding: 5px 10px; color: #25170d; background: var(--mario-yellow); border: 2px solid var(--mario-brown); box-shadow: 3px 3px 0 var(--mario-brown); font-family: var(--vp-font-family-mono); font-weight: 800; }
 .pixel-title { max-width: 820px; margin: 16px 0; font-family: var(--vp-font-family-mono); font-size: clamp(3rem, 10vw, 7rem); line-height: .9; letter-spacing: -.08em; }
-.pixel-title span { color: var(--vp-c-brand-1); }
+.pixel-title span { color: var(--mario-red); text-shadow: 4px 4px 0 var(--mario-yellow); }
 .pixel-intro { max-width: 650px; color: var(--vp-c-text-2); font-size: 1.1rem; line-height: 1.8; }
 .pixel-actions { display: flex; flex-wrap: wrap; gap: 16px; margin: 32px 0 64px; }
 .pixel-button { border: var(--pixel-border) !important; padding: 10px 18px; color: var(--vp-c-text-1) !important; background: var(--vp-c-bg-elv); box-shadow: var(--pixel-shadow); font-family: var(--vp-font-family-mono); font-weight: 800; }
-.pixel-button.primary { color: #07120f !important; background: var(--vp-c-brand-1); }
+.pixel-button.primary { color: #fff8dc !important; background: var(--mario-red); }
+.pixel-button:not(.primary) { background: var(--mario-yellow); color: #25170d !important; }
 .pixel-button:hover { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #020708; }
 .pixel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .pixel-card { position: relative; border: var(--pixel-border); padding: 24px; background: var(--vp-c-bg-elv); box-shadow: var(--pixel-shadow); }
-.pixel-card::before { content: attr(data-slot); position: absolute; top: -12px; right: 12px; padding: 2px 8px; color: #07120f; background: var(--vp-c-brand-1); font: 700 12px var(--vp-font-family-mono); }
+.pixel-card:nth-child(1) { border-top: 8px solid var(--mario-red); }
+.pixel-card:nth-child(2) { border-top: 8px solid var(--mario-green); }
+.pixel-card:nth-child(3) { border-top: 8px solid var(--mario-yellow); }
+.pixel-card::before { content: "? " attr(data-slot); position: absolute; top: -15px; right: 12px; padding: 2px 8px; color: #25170d; background: var(--mario-yellow); border: 2px solid var(--mario-brown); font: 700 12px var(--vp-font-family-mono); }
 .pixel-card h2 { margin: 6px 0 12px; border: 0; font-size: 1.25rem; }
 .pixel-card p { margin: 0; color: var(--vp-c-text-2); line-height: 1.7; }
 
