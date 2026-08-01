@@ -1,3 +1,16 @@
-.vercel
-node_modules
-docs/.vitepress/dist
+# Dependencies
+node_modules/
+
+# VitePress generated files
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# Deployment
+.vercel/
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store
