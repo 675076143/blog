@@ -154,6 +154,49 @@ AP SETKEYS DONE(rax0) - AKMMap=FT-SAE
 
 只要确认链路停在哪一步，后面的所有层都可以暂时不看。
 
+## 为什么别人的解决办法总是无法复制
+
+搜索 Q990B、Q990C 和 Q990D 的反馈，会看到一种很奇怪的场面：几乎每个最终成功的人都有自己的“唯一解”，但其他人照做后往往毫无效果。
+
+有人关闭 WPA3，有人强制 2.4 GHz，有人关闭 Band Steering 或 Mesh；有人需要恢复出厂设置、关闭 SmartThings 云端保存 Wi-Fi，或者更换手机；还有人最后靠 USB 固件升级才恢复。
+
+原因不是这些方法都是玄学，而是 SmartThings 把不同层的失败压缩成了近似的“网络错误”：
+
+```text
+发现设备
+  → 手机传递 Wi-Fi 凭据
+  → 802.11 认证与关联
+  → WPA 四次握手
+  → DHCP 获取地址
+  → 互联网连接
+  → 三星账号与 SmartThings 注册
+  → 局域网发现与长期在线
+```
+
+例如，有一位 Q990D 用户的回音壁已经取得 IP、可以 `ping` 通，却在 SmartThings 最后注册时失败。这和我的情况看起来一样，实际完全不同：我的回音壁甚至没有完成 802.11 关联。[Q990D 已连接 Wi-Fi 但无法注册 SmartThings](https://eu.community.samsung.com/t5/audio-video/hw-q990d-connects-to-wifi-but-not-to-smartthings/m-p/11232796)
+
+Q990C 的三星社区讨论已经累积了大量关于掉线、重新添加和 WPA3 的反馈，也进一步说明这是一个跨代存在、但根因并不单一的问题：
+
+- [Q990C SmartThings connection issues](https://eu.community.samsung.com/t5/audio-video/q990c-smartthings-connection-issues/td-p/8326720)
+- [Q990C Wi-Fi Disconnects 与 WPA3](https://eu.community.samsung.com/t5/audio-video/sound-bar-q990c-wifi-disconnects/m-p/9701111/highlight/true)
+
+三星官方排障页也承认，SmartThings 配置在 33%～80% 之间失败通常与家庭网络有关，并建议检查设备支持的频段、安全类型以及更换网络测试。但它仍没有向用户暴露具体失败阶段。[三星 SmartThings 连接排障](https://www.samsung.com/us/support/troubleshoot/TSG10007331/)
+
+更实用的方法是先按证据定位：
+
+| 日志或现象 | 卡住的位置 | 优先检查 |
+|---|---|---|
+| AP 完全看不到 MAC | 扫描/射频 | 频段、信道、信号、隐藏 SSID |
+| `InsertEntry → DeleteEntry`，没有 `Recv Assoc` | 802.11 关联 | n/ax、信道、带宽、驱动兼容性 |
+| 已关联但 WPA 握手失败 | 无线安全 | 密码、WPA2/WPA3、SAE、PMF |
+| 已完成握手但没有 IP | 网络接入 | DHCP、VLAN、地址池 |
+| 可以 ping，App 最后失败 | 应用/云端 | 账号绑定、旧凭据、App、固件 |
+| 添加成功后经常 Offline | 长期连接 | 漫游、组密钥、休眠、局域网发现 |
+
+还要注意，一个路由器开关可能同时改变很多底层行为。从 `n/ax` 改为 `n`，不只是换了一个速率标准，还可能同时移除 HE Capabilities、OFDMA、TWT、BSS Coloring 和对应的厂商驱动路径。
+
+所以本次可以确认的是：**Q990D 与 MT7986 在 2.4 GHz n/ax 环境中无法完成关联，限制为 n 后恢复。** 现有日志还不足以判断具体是哪项 ax/HE 能力触发问题，也不能只归罪于三星或 MT7986 中的一方。
+
 最终答案简单得有点荒唐：**独立 2.4 GHz、WPA2-AES、802.11n。**
 
 一年，终于好了。
