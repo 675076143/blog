@@ -52,6 +52,13 @@ export default {
         ],
       },
       {
+        text: "Network",
+        collapsed: true,
+        items: [
+          { text: "三星 HW-Q990D 终于连上 SmartThings", link: "/programming/samsung-hw-q990d-smartthings-openwrt-wifi-fix" },
+        ],
+      },
+      {
         text: "Linux",
         collapsed: true,
         items: [
