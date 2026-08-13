@@ -1,4 +1,5 @@
 const posts = [
+  { text: "Laravel Octane 接口性能优化实录", link: "/programming/laravel-octane-api-xing-neng-you-hua-shi-lu" },
   { text: "GitLab CI 流水线优化实录", link: "/programming/gitlab-ci-pipeline-you-hua-shi-lu" },
   { text: "我是怎么放弃 RAG 和 MCP 的", link: "/programming/wo-shi-zen-yang-fang-qi-mcp-de" },
   { text: "PHP-FPM SIGSEGV 故障排查实录", link: "/programming/php-fpm-sigsegv-pai-cha" },
