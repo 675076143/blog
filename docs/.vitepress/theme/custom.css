@@ -1307,3 +1307,88 @@ html[data-blog-theme="tiga"] .lens-crown::after {
   .theme-switcher { right: 10px; bottom: 10px; }
   .theme-switcher-label { display: none; }
 }
+
+/* Keep the default Minecraft skin readable when VitePress is in light mode. */
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPNavBar .title,
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPNavBarMenuLink,
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPNavBarSocialLinks,
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPNavBarAppearance {
+  color: var(--vp-c-text-1) !important;
+}
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPNavBarTitle .title::before {
+  color: var(--vp-c-brand-1);
+}
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-2) !important;
+  text-shadow: none;
+}
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPSidebar {
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-alt) !important;
+  border-color: var(--vp-c-divider);
+}
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPSidebarItem.level-0 + .VPSidebarItem.level-0 {
+  border-color: var(--vp-c-divider);
+}
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPSidebarItem.level-1 .text,
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPDocAsideOutline .outline-link {
+  color: #555b56;
+}
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPSidebarItem.level-1.is-active > .item .link > .text,
+:root:not(.dark):is([data-blog-theme="minecraft"], :not([data-blog-theme])) .VPDocAsideOutline .outline-link.active {
+  color: #286b31;
+}
+
+/* Final mobile rules live after every skin so theme-specific desktop art cannot override them. */
+@media (max-width: 760px) {
+  html, body { overflow-x: clip; }
+  .VPDoc .content { padding-right: 16px; padding-left: 16px; }
+  .vp-doc h1 { font-size: clamp(1.75rem, 9vw, 2.25rem); overflow-wrap: anywhere; }
+  .vp-doc h2 { margin-top: 36px; font-size: 1.35rem; }
+  .vp-doc table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .pixel-home,
+  html[data-blog-theme] .pixel-home { width: 100%; padding: 28px 16px 76px; }
+  .craft-nav { gap: 16px; margin-bottom: 38px; }
+  .craft-nav > div { gap: 12px; }
+  .craft-brand { flex: 0 0 auto; }
+  .craft-hero,
+  html[data-blog-theme] .craft-hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; min-height: 0; }
+  .craft-copy,
+  html[data-blog-theme] .craft-copy { max-width: 100%; }
+  .pixel-kicker { max-width: 100%; font-size: 10px; overflow-wrap: anywhere; }
+  .pixel-title,
+  html[data-blog-theme] .pixel-title { max-width: 100%; font-size: clamp(3rem, 17vw, 4.6rem); line-height: .94; overflow-wrap: anywhere; }
+  .pixel-intro { font-size: 1rem; line-height: 1.7; }
+  .pixel-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .pixel-button { min-width: 0; padding-right: 10px; padding-left: 10px; }
+
+  .block-showcase,
+  html[data-blog-theme] .block-showcase {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(280px, 88vw);
+    height: 250px;
+    margin: 0 auto -18px;
+    justify-self: center;
+    transform: scale(.82);
+    transform-origin: top center;
+  }
+  html[data-blog-theme="terminal"] .block-showcase::before { right: 50%; font-size: 13px; transform: translateX(50%); }
+  .pixel-grid,
+  html[data-blog-theme] .pixel-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 34px; }
+  .pixel-card,
+  html[data-blog-theme] .pixel-card { min-height: 0; padding-right: 18px; padding-left: 18px; }
+
+  .theme-switcher { right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); max-width: calc(100vw - 16px); padding: 4px; box-shadow: 2px 2px 0 rgba(0,0,0,.3); }
+  .theme-switcher button,
+  html[data-blog-theme] .theme-switcher button { min-width: 32px; }
+}
+
+@media (max-width: 380px) {
+  .craft-nav > div a:nth-child(n + 2) { display: none; }
+  .pixel-actions { grid-template-columns: 1fr; }
+  .block-showcase,
+  html[data-blog-theme] .block-showcase { transform: scale(.72); margin-bottom: -42px; }
+}
