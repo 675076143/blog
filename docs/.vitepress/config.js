@@ -1,4 +1,5 @@
 const posts = [
+  { text: "用 Rust 构建本地实时游戏翻译器", link: "/programming/rust-game-translate" },
   { text: "Laravel Octane 接口性能优化实录", link: "/programming/laravel-octane-api-xing-neng-you-hua-shi-lu" },
   { text: "GitLab CI 流水线优化实录", link: "/programming/gitlab-ci-pipeline-you-hua-shi-lu" },
   { text: "我是怎么放弃 RAG 和 MCP 的", link: "/programming/wo-shi-zen-yang-fang-qi-mcp-de" },
