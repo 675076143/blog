@@ -15,7 +15,7 @@ description: Linux、后端工程与折腾记录
     <div class="craft-copy">
       <div class="pixel-kicker">SYSTEM READY // PERSONAL DEV LOG</div>
       <h1 class="pixel-title">BUILD.<br><span>BREAK.</span><br>REPEAT.</h1>
-      <p class="pixel-intro">记录 Linux 桌面、后端工程和自托管实践。这里没有标准答案，只有真实踩坑、复盘，以及下一次更聪明的失败。</p>
+      <p class="pixel-intro">麻木不仁的日子里，记录即是反抗。</p>
       <div class="pixel-actions">
         <a class="pixel-button primary" href="/programming/gei-llm-jian-yi-ge-zhi-shi-ku">进入世界</a>
         <a class="pixel-button" href="/about">查看玩家</a>
@@ -41,20 +41,20 @@ description: Linux、后端工程与折腾记录
     <article class="pixel-card" data-slot="01">
       <span class="voxel-icon grass-block" aria-hidden="true"></span>
       <div class="pixel-label">LINUX.DESKTOP</div>
-      <h2>让桌面真正属于自己</h2>
-      <p>Hyprland、HDR、CachyOS，以及那些只有亲手折腾才会遇见的问题。</p>
+<h2>自己的桌面自己折腾</h2>
+      <p>Hyprland、HDR、CachyOS——全是亲手折腾才会撞上的问题。</p>
     </article>
     <article class="pixel-card" data-slot="02">
       <span class="voxel-icon stone-block" aria-hidden="true"></span>
       <div class="pixel-label">BACKEND.OPS</div>
-      <h2>从故障里提炼经验</h2>
-      <p>PHP、Laravel、Redis、MySQL：记录线上问题背后的原因，而不只是答案。</p>
+<h2>问题总得查到根</h2>
+      <p>我恨 PHP。但线上故障背后的原因，比答案更值得记录。</p>
     </article>
     <article class="pixel-card" data-slot="03">
       <span class="voxel-icon diamond-block" aria-hidden="true"></span>
       <div class="pixel-label">SELF.HOST</div>
-      <h2>自己的服务自己掌控</h2>
-      <p>本地模型、媒体服务、容器与 NAS，寻找易维护的个人基础设施。</p>
+<h2>服务放自己手里才安心</h2>
+      <p>本地模型、媒体库、容器和 NAS——好用也好维护，才留得下。</p>
     </article>
   </div>
 </div>
