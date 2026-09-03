@@ -65,6 +65,7 @@ export default {
         text: "Linux",
         collapsed: true,
         items: [
+          { text: "CachyOS 本地双席位实录", link: "/programming/cachyos-ben-di-shuang-xi-wei-shi-lu" },
           { text: "Linux HDR 折腾记", link: "/programming/linux-hdr-tale" },
           { text: "Hyprland 的 HDR 桌面为什么不发灰", link: "/programming/hyprland-hdr-bu-fa-hui-de-yuan-li" },
           { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
