@@ -4,9 +4,9 @@
 
 Windows 上有 ASTER 这类 multiseat 软件：一台主机接两套显示器、键盘和鼠标，两个人同时登录、同时使用。到了 2026 年，Linux 没理由做不到吧？
 
-事实证明，Linux 确实做得到，而且标准组件已经覆盖了最重要的部分。真正折磨人的不是“启动两个桌面”，而是登录管理器、GPU 输出归属，以及同一台显示器在两个席位之间切换时那些藏得很深的边界条件。
+事实证明，Linux 确实做得到，而且标准组件已经覆盖了最重要的部分。真正折磨人的不是“启动两个桌面”，而是登录管理器、GPU 与音频设备归属，以及同一台显示器在两个席位之间切换时那些藏得很深的边界条件。
 
-这篇文章记录一台 CachyOS 主机从设想到稳定落地的完整过程，包括走通的方案、失败的四线双屏实验，以及最后为什么主动收敛成三线。
+这篇文章记录一台 CachyOS 主机从设想到稳定落地的完整过程，包括走通的方案、失败的四线和软件借屏实验，以及最后为什么主动收敛成固定三线双席。
 
 ## 最终效果
 
@@ -73,11 +73,11 @@ TimeoutStopSec=5s
 
 这个问题和 multiseat 没直接关系，但在频繁登录、注销测试时会被放大得非常明显。
 
-## 想让一个人临时用双屏
+## 第三个坑：想让一个人临时用双屏
 
 双人使用时，两块屏各归一个席位；只有一个人时，主用户自然希望临时借走另一块屏。
 
-最终采用三根线：
+显示拓扑最终采用三根线：
 
 ```text
 RX 7900 XTX DP    → TCL    # seat0 主屏
@@ -85,23 +85,27 @@ RX 7900 XTX HDMI1 → IOC    # seat0 临时借屏
 Raphael iGPU DP   → IOC    # seat1 固定主屏
 ```
 
-正常双席模式下，TCL 显示 seat0，IOC 显示 seat1。seat0 借屏时，脚本先启用独显 HDMI 输出，再通过 DDC/CI 把 IOC 从核显 DP 切到独显 HDMI1；归还时先切回 DP，再关闭独显 HDMI 输出。
+正常双席模式下，TCL 显示 seat0，IOC 显示 seat1。我们曾尝试让 seat0 借屏：脚本先启用独显 HDMI 输出，再通过 DDC/CI 把 IOC 从核显 DP 切到独显 HDMI1；归还时反向执行。
 
 IOC 的输入切换使用 VCP `0x60`：
 
 ```bash
-# DP1
-ddcutil setvcp 60 0x0f --bus 4 --noverify
+# IOC 固件实际使用的 DP 值
+ddcutil setvcp 60 0x08 --bus 4 --noverify
 
-# HDMI1
-ddcutil setvcp 60 0x11 --bus 13 --noverify
+# IOC 固件实际使用的 HDMI 值
+ddcutil setvcp 60 0x05 --bus 13 --noverify
 ```
 
-DDC bus 会随当前输入变化，因此从 DP 切走时通过核显 DP 的 bus 13，下次从 HDMI 切回时通过独显 HDMI 的 bus 4。显示器切走后旧链路来不及回复，`ddcutil` 可能报告通信失败，但切换实际上已经完成，所以这里使用 `--noverify` 并容忍命令退出状态。
+DDC bus 会随当前输入变化，因此从 DP 切走时通过核显 DP 的 bus 13，下次从 HDMI 切回时通过独显 HDMI 的 bus 4。IOC 的 EDID capabilities 宣称标准值 `0x0f`/`0x11`，但固件会静默忽略，实测必须使用厂商值 `0x08`/`0x05`。
 
-运行状态保存在 `/run/multiseat-display-mode`，每次开机由 systemd-tmpfiles重新创建为 `shared`。即使上次在双屏模式下断电，重启也始终优先恢复两个人都有画面的安全状态。
+第一轮实验一度成功，但显示器切换输入时会真实撤销另一输入的 HPD，核显 DP 随即发生断连、重连与 LTTPR 链路训练。更糟的是，这不是简单的双击竞态：即便加入非阻塞锁、30 秒冷却，并把 watcher 缩减到只启停独显 HDMI，单次切换仍然可能令 KWin、PowerDevil/libddcutil 与 AMDGPU 的 hotplug/atomic 链路进入风暴，最终整机冻结。
 
-## 失败实验：四根线为什么没有留下
+另一类冻结来自脚本重新配置 TCL 的 4K160 输出：日志出现 `dsc2_enable`，继而 `vpg3_update_generic_info_packet` 持续超时。禁止脚本触碰 TCL 的 DP/DSC 状态解决了这一类问题，却没有解决 IOC 跨两张 GPU 选源的根本风险。
+
+因此文章的最终方案**不再包含一键借屏**。桌面入口和底层 `seat0-dual` 动作都已停用，系统固定使用双人双席。需要临时切换面板输入时可以操作显示器 OSD，但物理选源只改变面板显示哪路信号，不会安全地替 Plasma 完成第二输出的加入与布局。
+
+## 第四个坑：四根线为什么没有留下
 
 为了让任意席位都能借用另一块屏，我曾增加第四根线：
 
@@ -135,6 +139,25 @@ Plasma 和 plasmashell 其实已经启动，只是 KWin 退到零输出占位屏
 
 但 Ruby 是这台机器的新手用户。一个需要学习 Hyprland 快捷键才能绕过显示兼容问题的方案，不算完成。最终删除第四根线，接受 seat1 不借用 TCL，换取 Plasma 每次都能可靠登录。
 
+## 音频也必须分席
+
+两个用户会各自启动一套 PipeWire 与 WirePlumber，但“进程独立”不代表“硬件自动隔离”。默认情况下，两边都枚举到了所有 ALSA 声卡：独显 HDMI、核显 HDMI，以及主板上的 `Generic USB Audio`。两个实例若选择同一张卡，就会争抢设备；Ruby 还看到了许多重复的 USB Output。
+
+物理上实际只有三类输出：TCL、IOC，以及通过主板音频接口连接的漫步者。最终使用用户级 WirePlumber 规则按稳定的 `device.name` 过滤：
+
+```ini
+# robin 屏蔽 seat1 的核显 HDMI
+{ device.name = "alsa_card.pci-0000_1a_00.1" }
+
+# Ruby 屏蔽 seat0 的独显 HDMI 与主板 USB Audio
+{ device.name = "alsa_card.pci-0000_03_00.1" }
+{ device.name = "alsa_card.usb-Generic_USB_Audio-00" }
+```
+
+重启两边 PipeWire 后，robin 只看到 TCL 与漫步者，Ruby 只看到 IOC，重复节点也随之消失。验证时 Ruby 的 Chromium 流、PipeWire sink 和内核 ELD 都显示正常却没有声音；短暂播放左右声道测试音能够发声，最后发现只是 Chromium 应用流被静音。这也是排查数字音频的实用顺序：应用流 → PipeWire sink → ALSA/ELD → 显示器 OSD。
+
+两席位现在可以同时播放，但应使用不同的物理输出。若要让两个用户共同输出到同一套漫步者，需要额外建立系统级混音或把一方的音频转发给另一方，会牺牲隔离性，不属于当前稳定方案。
+
 ## 最后的取舍
 
 最终方案没有实现最对称的功能，却实现了真正重要的目标：
@@ -143,10 +166,10 @@ Plasma 和 plasmashell 其实已经启动，只是 KWin 退到零输出占位屏
 - 两套输入设备与桌面会话完全隔离；
 - 第二席位不需要客户端；
 - 第二席位可以共享高性能独显渲染；
-- 主用户单独使用时仍能一键借用第二块显示器；
+- 两席位的显示与音频设备都明确分配，不再争抢同一 ALSA 设备；
 - 新手席位保留熟悉的 Plasma；
 - 每次重启都有确定、可恢复的默认状态。
 
 Linux multiseat 在 2026 年不是做不到，而是缺少 ASTER 那样把硬件差异、登录管理器和桌面合成器边界统一包起来的产品。标准组件已经足够强，但最后 10% 的集成仍然需要理解 DRM、logind、Wayland compositor 和显示器输入切换。
 
-这次最重要的经验不是“Hyprland比 KWin 强”，也不是“核显不能双屏”，而是不要把某个组合的 atomic modeset 失败误判成整个平台的能力边界。把每一层拆开验证，最后才能知道应该修、应该绕，还是应该诚实地少要一个功能。
+这次最重要的经验不是“Hyprland 比 KWin 强”，也不是“核显不能双屏”，而是不要把某个组合的 atomic modeset 失败误判成整个平台的能力边界，也不要把一次成功切换当成稳定性证明。把每一层拆开验证，最后才能知道应该修、应该绕，还是应该诚实地少要一个功能。
