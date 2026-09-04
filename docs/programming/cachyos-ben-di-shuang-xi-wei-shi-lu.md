@@ -158,6 +158,54 @@ Plasma 和 plasmashell 其实已经启动，只是 KWin 退到零输出占位屏
 
 两席位现在可以同时播放，但应使用不同的物理输出。若要让两个用户共同输出到同一套漫步者，需要额外建立系统级混音或把一方的音频转发给另一方，会牺牲隔离性，不属于当前稳定方案。
 
+## 最终验收：两个人同时跑 Vulkan Minecraft 光影
+
+桌面、输入、显示和音频都稳定之后，最后一项验收是真实的双人游戏负载。robin 与 Ruby 分别启动自己的 Minecraft 26.2 Fabric 实例，两边使用同一套客户端组合：
+
+```text
+Fabric Loader 0.19.5
+Fabric API 0.159.0+26.2
+Sodium 0.9.1+mc26.2
+Vitrail 0.9.0-beta+mc26.2
+Complementary Unbound / High
+Graphics API: Prefer Vulkan (Experimental)
+```
+
+这里容易混淆的是，Vitrail 不是 VulkanMod，也不是 Iris。Minecraft 26.2 自己提供实验性 Vulkan 后端，Vitrail 负责把传统 OptiFine 格式光影包转换并运行在这条后端上；它依赖 Sodium 0.9.x 和 Fabric API，不能与 Iris 混装。整个方案虽然使用 Vulkan 和复杂光影，却不是硬件光线追踪，并没有调用 7900 XTX 的 RT 单元。
+
+![两个席位同时运行 Minecraft 26.2 Vulkan 光影](../assets/minecraft-dual-seat-vulkan-shaders.png)
+
+实际同时运行时，robin 一侧最高约 130 FPS，Ruby 一侧最高约 90 FPS。Ruby 的帧率更低符合预期：robin 是独显直接输出，Ruby 则是 RX 7900 XTX 渲染、DMA-BUF 跨 GPU 传帧、Raphael 核显上的 KWin 合成、最后从主板 DP 输出。两个画面的视角和瞬时场景也不同，所以这组数字只能证明方案具备实际可玩性，不能直接把 90/130 的差值当作 PRIME 固有损耗。
+
+系统监控给出了更关键的证据：属于 `robin` 与 `Ruby` 的两个 Java 游戏进程同时存在，RX 7900 XTX 达到 100% 利用率，显存约 8.6/24 GiB，功耗约 338 W。这意味着第二席位不只是“能看到 Vulkan 测试窗口”，而是真的与主席位并发使用同一张独显跑完整 Minecraft 光影负载。
+
+![两个用户的 Java 进程并发使用 RX 7900 XTX](../assets/minecraft-dual-seat-gpu-load.png)
+
+显卡资源由驱动动态调度，并不会给两个人硬切成各 50%。满载时双方会互相影响帧时间，因此日常双人游玩更适合各自限帧，而不是让两边都无限帧把显卡长期顶到 100%。
+
+为了判断 Ruby 少掉的帧数究竟来自哪里，我又读取了 Linux DRM 为每个进程提供的 `fdinfo` 引擎计数器。两边设置已经对齐：同为 4K160、scale 1.7、VSync、260 FPS 上限、12 区块距离，以及完全相同的 Sodium、Vitrail 和 Complementary 文件。两个 Minecraft 进程都只打开 7900 XTX 对应的 `renderD128`，所以 Ruby 并没有误跑到核显上；独显 PCIe 4.0 ×16 链路也处于满宽度。
+
+10 秒增量采样的结果很有意思：
+
+| 进程 | 独显 GFX | 独显 SDMA | 核显 GFX |
+|---|---:|---:|---:|
+| robin Minecraft | 69.8% | 0% | — |
+| Ruby Minecraft | 27.3% | 76.2% | — |
+| robin KWin | 2.0% | 0% | — |
+| Ruby KWin | — | — | 29.7% |
+
+Ruby 的高 SDMA 活动，加上 KWin 同时打开两张 GPU、在核显侧持有数百 MiB 跨设备共享显存，直接证明了每帧确实经过独显到核显的搬运。可是 76.2% SDMA 不能读成“损失了 76.2% GPU 性能”：SDMA 是可与 GFX 并行的搬运引擎。真正拉低 Ruby 帧率的是 buffer 导入、跨 GPU 同步和 present 反压——它在等待当前帧送到核显时不能持续提交下一帧，robin 的直出客户端便自然填补了空出的 GFX 时间。
+
+这也不是 robin 获得了更高的系统优先级。两个 Java 进程同为 `nice -4`、`SCHED_OTHER`、实时优先级 0、动态优先级 23，也没有不同的 cgroup 权重。AMDGPU 不会因为一个进程属于 seat0 就自动偏爱它。
+
+曾尝试用 MangoHud做 60 秒定量 A/B。第一份日志虽然得到 153.6 FPS 平均值，却是在游戏内 Esc 菜单下记录，GPU 平均负载只有 7%，显然不代表正常世界渲染；默认的“AFK 时降低帧率”还会在一分钟无输入后把游戏限制到 30 FPS。严格测量必须让两位玩家站在同一服务器、同一位置和朝向，固定天气与时间，把闲置限帧改成“仅最小化”，分别记录 robin 单开、Ruby 单开和双开三组。由于实际操作成本，本轮没有继续完成。
+
+因此这里保留诚实的能力边界：现有数据证明 Offload 有真实的搬运和同步成本，也证明两个 4K 光影客户端会争抢同一张 GPU；它不能证明 Offload 单独损失 10%，更不能证明 Ruby 少掉的接近 40%全由 Offload 引起。对日常使用而言，给双方设置 80–90 FPS 上限，比追求一个脱离具体场景的固定损耗百分比更有价值。
+
+HMCL 也从 robin 私有目录调整成了系统级共享程序：主体位于 `/opt/hmcl`，命令和应用菜单入口分别位于 `/usr/local/bin/hmcl` 与 `/usr/share/applications/hmcl.desktop`。共享的只有启动器程序；两人的 HMCL 设置、账号、Minecraft 实例、模组和存档仍留在各自家目录，不会互相覆盖。
+
+同机联机时，服务端可以绑定 `0.0.0.0:25565`，表示监听所有本机 IPv4 接口。两个本机客户端的通信不经过物理网卡、交换机和外部局域网，确实省掉了物理网络传输；不过数据仍经过内核 TCP/IP、socket 缓冲区和 Minecraft 协议栈。严格来说，`0.0.0.0` 是服务端监听地址，客户端更规范的连接地址是 `127.0.0.1:25565` 或 `localhost:25565`；其他局域网设备则使用主机的 LAN 地址。
+
 ## 最后的取舍
 
 最终方案没有实现最对称的功能，却实现了真正重要的目标：
@@ -166,6 +214,7 @@ Plasma 和 plasmashell 其实已经启动，只是 KWin 退到零输出占位屏
 - 两套输入设备与桌面会话完全隔离；
 - 第二席位不需要客户端；
 - 第二席位可以共享高性能独显渲染；
+- 两个席位已实测同时运行 Minecraft 26.2 Vulkan + Complementary 光影；
 - 两席位的显示与音频设备都明确分配，不再争抢同一 ALSA 设备；
 - 新手席位保留熟悉的 Plasma；
 - 每次重启都有确定、可恢复的默认状态。
