@@ -206,6 +206,20 @@ HMCL 也从 robin 私有目录调整成了系统级共享程序：主体位于 `
 
 同机联机时，服务端可以绑定 `0.0.0.0:25565`，表示监听所有本机 IPv4 接口。两个本机客户端的通信不经过物理网卡、交换机和外部局域网，确实省掉了物理网络传输；不过数据仍经过内核 TCP/IP、socket 缓冲区和 Minecraft 协议栈。严格来说，`0.0.0.0` 是服务端监听地址，客户端更规范的连接地址是 `127.0.0.1:25565` 或 `localhost:25565`；其他局域网设备则使用主机的 LAN 地址。
 
+## Steam 家庭共享了，为什么已安装仍然是 0
+
+Ruby 随后登录自己的 Steam 账号并加入 robin 的 Steam 家庭。游戏许可证已经出现，“已安装”数量却仍然是 0。原因并不在家庭共享：它只共享授权，不会跨 Linux 用户自动共享本机文件。Robin 的 26 个安装清单和约 599 GiB 游戏都在 `/home/robin/.local/share/Steam/steamapps`，而两个用户的家目录权限都是 `0700`，Ruby 本来就不应该读取 Robin 的私人 Steam 数据。
+
+最直接的做法是把整个 Steam 库改成双方可写，但这对双席位并不安全。两个 Steam 客户端会同时接触 `appmanifest`、下载临时状态、Proton `compatdata` 与 shader cache；一边更新、验证或卸载时可能影响另一边正在运行的游戏。
+
+这台机器的 `/home` 使用 Btrfs，于是采用 Reflink：只把 `steamapps/common/` 和 26 个 `appmanifest_*.acf` 克隆到 Ruby 自己的默认库。两套文件拥有独立的目录项和所有权，但初始引用相同的数据块；以后哪一边更新文件，Btrfs 才对发生变化的数据块执行写时复制。
+
+克隆约 599 GiB 游戏本体只用了约 15 秒。`btrfs filesystem du` 显示两个逻辑目录约 592.08 GiB 数据共享，当时各自独占数据都是 0 B。Ruby 的文件所有权全部设为 `Ruby:ruby`，而两边的 Steam 客户端配置、Proton prefix、shader cache、下载状态和用户存档依旧分开。
+
+![两个席位同时运行各自的 Steam 游戏](../assets/steam-dual-seat-reflink-success.png)
+
+最终两边已经同时启动各自的 Steam 游戏。这个结果比“共享一个可写库”更符合 multiseat 的边界：大体积只读内容通过文件系统复用，所有会变化、会加锁、带用户身份的状态仍按用户隔离。代价是 Reflink 不是实时同步；Robin 后装游戏时要再克隆给 Ruby，两边分别更新后也会逐渐产生独占数据块。
+
 ## 最后的取舍
 
 最终方案没有实现最对称的功能，却实现了真正重要的目标：
@@ -215,6 +229,7 @@ HMCL 也从 robin 私有目录调整成了系统级共享程序：主体位于 `
 - 第二席位不需要客户端；
 - 第二席位可以共享高性能独显渲染；
 - 两个席位已实测同时运行 Minecraft 26.2 Vulkan + Complementary 光影；
+- Steam 家庭库通过 Btrfs Reflink 复用约 599 GiB 游戏本体，并已实测两边同时运行；
 - 两席位的显示与音频设备都明确分配，不再争抢同一 ALSA 设备；
 - 新手席位保留熟悉的 Plasma；
 - 每次重启都有确定、可恢复的默认状态。
