@@ -220,6 +220,16 @@ Ruby 随后登录自己的 Steam 账号并加入 robin 的 Steam 家庭。游戏
 
 最终两边已经同时启动各自的 Steam 游戏。这个结果比“共享一个可写库”更符合 multiseat 的边界：大体积只读内容通过文件系统复用，所有会变化、会加锁、带用户身份的状态仍按用户隔离。代价是 Reflink 不是实时同步；Robin 后装游戏时要再克隆给 Ruby，两边分别更新后也会逐渐产生独占数据块。
 
+Ruby 第一次接管这些游戏后，Steam 显示了一些最多几百 MiB 的更新，而 robin 没有，这是正常的。我们没有复制 Ruby 的 shader cache、Proton prefix 和客户端运行状态；Steam 需要为新用户补齐 Shader Pre-Caching、Steam Linux Runtime、Steamworks 运行库，以及账号对应的 DLC、语言包或少量 depot 文件。Ruby 写入新内容时，Btrfs 只对变化的数据块执行 CoW，Robin 仍然引用旧数据块，并不会跟着被修改。
+
+`shadercache/` 最终也没有共享。两边虽然都让 7900 XTX 执行游戏渲染，但 robin 是独显直出，Ruby 还要经过核显 KWin 合成；此外缓存还与游戏、Proton、Mesa/RADV、驱动和启动参数有关。两个 Steam 客户端同时写一个缓存目录，可能发生锁冲突、失效或反复重建。它本来就是可再生成数据，Ruby 当前只补几百 MiB，不值得为了节省这点空间破坏隔离。`compatdata/` 更不能共享，其中包含 Wine prefix、注册表、游戏配置、锁文件和可能的本地存档。
+
+这套方案最后形成了一条清楚的边界：`common/` 的大体积游戏文件用 Reflink 复用；`appmanifest` 各自持有；`compatdata`、`shadercache`、下载状态和用户配置全部独立。
+
+后续也不打算做实时同步。Ruby 可以正常下载自己的游戏，只是新安装不会自动出现在 robin 的库里；反方向也是一样。平时让两边各自下载、更新和卸载，每月一次，或者可用空间降到约 200 GiB 时再整理：只把另一边也需要的几十到上百 GiB 大游戏按 AppID 定向 Reflink，小补丁、shader cache 和 Proton 数据不动。
+
+这种“低频人工整理”比监听目录自动双向同步可靠得多。Steam 可能正在下载半成品，两个账号也可能拥有不同 DLC、语言 depot 或测试分支；若再把卸载传播过去，很容易从节省空间变成误删。整理时只需让双方完全退出 Steam，明确源用户、目标用户和 AppID，克隆对应游戏目录与安装清单并修正目标所有权即可。
+
 ## 最后的取舍
 
 最终方案没有实现最对称的功能，却实现了真正重要的目标：
