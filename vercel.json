@@ -1,0 +1,10 @@
+{
+  "headers": [
+    {
+      "source": "/giscus/:path*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+/* ROBIN.EXE / Giscus archive theme. Served as a public stylesheet. */
+:root { color-scheme: light; }
+main {
+  --color-fg-default: #262a26;
+  --color-fg-muted: #62655e;
+  --color-fg-subtle: #62655e;
+  --color-canvas-default: transparent;
+  --color-canvas-overlay: #faf9f5;
+  --color-canvas-inset: #f3f2ed;
+  --color-canvas-subtle: #f3f2ed;
+  --color-border-default: #cecec5;
+  --color-border-muted: #cecec5;
+  --color-neutral-muted: #a66b2114;
+  --color-accent-fg: #8d591c;
+  --color-accent-emphasis: #8d591c;
+  --color-accent-muted: #cecec5;
+  --color-accent-subtle: #a66b2114;
+  --color-btn-text: #262a26;
+  --color-btn-bg: #f3f2ed;
+  --color-btn-border: #cecec5;
+  --color-btn-shadow: none;
+  --color-btn-inset-shadow: none;
+  --color-btn-hover-bg: #faf9f5;
+  --color-btn-hover-border: #8d591c;
+  --color-btn-active-bg: #a66b2114;
+  --color-btn-active-border: #8d591c;
+  --color-btn-selected-bg: #a66b2114;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #8d591c;
+  --color-btn-primary-border: #8d591c;
+  --color-btn-primary-shadow: none;
+  --color-btn-primary-inset-shadow: none;
+  --color-btn-primary-hover-bg: #754815;
+  --color-btn-primary-hover-border: #754815;
+  --color-btn-primary-selected-bg: #8d591c;
+  --color-btn-primary-selected-shadow: none;
+  --color-btn-primary-disabled-text: #62655e;
+  --color-btn-primary-disabled-bg: #f3f2ed;
+  --color-btn-primary-disabled-border: #cecec5;
+  --color-action-list-item-default-hover-bg: #a66b2114;
+  --color-segmented-control-bg: #f3f2ed;
+  --color-segmented-control-button-bg: #faf9f5;
+  --color-segmented-control-button-selected-border: #8d591c;
+  --color-success-fg: #8d591c;
+  --color-attention-fg: #8d591c;
+  --color-attention-muted: #cecec5;
+  --color-attention-subtle: #a66b2114;
+  --color-danger-fg: #ae3935;
+  --color-danger-muted: #cecec5;
+  --color-danger-subtle: #a66b2114;
+  --color-primer-shadow-inset: none;
+  --color-scale-gray-1: #f3f2ed;
+  --color-scale-blue-1: #a66b2114;
+  --color-social-reaction-bg-hover: #f3f2ed;
+  --color-social-reaction-bg-reacted-hover: #a66b2114;
+  --color-prettylights-syntax-comment: #62655e;
+  --color-prettylights-syntax-constant: #8d591c;
+  --color-prettylights-syntax-entity: #8d591c;
+  --color-prettylights-syntax-storage-modifier-import: #8d591c;
+  --color-prettylights-syntax-entity-tag: #8d591c;
+  --color-prettylights-syntax-keyword: #8d591c;
+  --color-prettylights-syntax-string: #262a26;
+  --color-prettylights-syntax-variable: #8d591c;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #8d591c;
+  --color-prettylights-syntax-invalid-illegal-text: #8d591c;
+  --color-prettylights-syntax-carriage-return-text: #8d591c;
+  --color-prettylights-syntax-string-regexp: #8d591c;
+  --color-prettylights-syntax-markup-list: #8d591c;
+  --color-prettylights-syntax-markup-heading: #8d591c;
+  --color-prettylights-syntax-markup-italic: #262a26;
+  --color-prettylights-syntax-markup-bold: #262a26;
+  --color-prettylights-syntax-markup-deleted-text: #8d591c;
+  --color-prettylights-syntax-markup-inserted-text: #8d591c;
+  --color-prettylights-syntax-markup-changed-text: #8d591c;
+  --color-prettylights-syntax-markup-ignored-text: #8d591c;
+  --color-prettylights-syntax-meta-diff-range: #8d591c;
+  --color-prettylights-syntax-brackethighlighter-angle: #8d591c;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #8d591c;
+  --color-prettylights-syntax-constant-other-reference-link: #8d591c;
+  --color-prettylights-syntax-invalid-illegal-bg: #a66b2114;
+  --color-prettylights-syntax-carriage-return-bg: #a66b2114;
+  --color-prettylights-syntax-markup-deleted-bg: #a66b2114;
+  --color-prettylights-syntax-markup-inserted-bg: #a66b2114;
+  --color-prettylights-syntax-markup-changed-bg: #a66b2114;
+  --color-prettylights-syntax-markup-ignored-bg: #a66b2114;
+}
+body { background: transparent; }
+main { font-family: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; font-size: 14px; line-height: 1.8; }
+.gsc-main { gap: 20px; }
+.gsc-comment, .gsc-comment-box, .gsc-comment-box-tabs, .gsc-comment-box-textarea, .gsc-reply-box { border-radius: 2px !important; box-shadow: none !important; }
+.gsc-comment-header { background: transparent !important; border-bottom: 1px solid var(--color-border-muted); }
+.gsc-comment-box-textarea { background: var(--color-canvas-inset); font: inherit; }
+.gsc-comment-box-tabs { border-bottom-color: var(--color-border-default); }
+.gsc-comment-box-tab { border-radius: 0 !important; }
+.gsc-comment-box-tab[aria-selected="true"] { color: var(--color-accent-fg); }
+.gsc-comment-content { line-height: 1.9; }
+.gsc-comment-author-avatar { border-radius: 3px !important; }
+.gsc-comment-box-buttons button, .gsc-reply-box button { border-radius: 2px !important; box-shadow: none !important; }
+.gsc-comment-box-bottom { background: transparent !important; }
+.gsc-header { padding-bottom: 12px; border-bottom: 1px solid var(--color-border-muted); }
+.gsc-comment-footer { color: var(--color-fg-muted); }
+main a:hover { color: var(--color-accent-emphasis); }
+main :focus-visible { outline: 2px solid var(--color-accent-fg); outline-offset: 3px; }
+main .pagination-loader-container { background-image: none; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

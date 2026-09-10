@@ -1,0 +1,64 @@
+/* One shell from the cabinet to the open document. Glass stays at the edges;
+   long-form text sits on a solid reading surface. */
+.reader-toolbar { display: flex; align-items: center; gap: 28px; min-height: 67px; border-bottom: 1px solid var(--archive-line); color: var(--archive-muted); font: 12px/1.6 var(--vp-font-family-mono); }
+.reader-toolbar > a { color: var(--archive-accent); padding: 12px 0; }
+.reader-toolbar > span > span { padding: 0 12px; color: var(--archive-accent); }
+.reader-mode { margin-left: auto; }
+.reader-workspace { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 38px; align-items: start; margin-top: 30px; }
+.reader-rail { position: sticky; top: 24px; max-height: calc(100dvh - 48px); overflow-y: auto; scrollbar-width: thin; padding: 0 6px 20px 0; }
+.reader-file-card { position: relative; width: 170px; margin: 12px auto 34px; padding: 15px; color: var(--archive-muted); border: 1px solid var(--glass-edge); border-radius: 3px; background: linear-gradient(125deg, #ffffff30, transparent 38%, var(--glass-tint)), var(--archive-surface); box-shadow: 2px 3px 0 var(--archive-line), 5px 6px 0 var(--glass-shade), 8px 15px 20px #1721160f; transform: rotate(-4deg); }
+.reader-file-card::after { content: ''; position: absolute; inset: 6px; pointer-events: none; border: 1px solid var(--glass-edge); background: linear-gradient(115deg, transparent 27%, #ffffff50 29%, #ffffff0a 35%, transparent 42%); }
+.reader-file-card > div { display: flex; align-items: center; justify-content: space-between; }
+.reader-file-card b { color: var(--vp-c-text-1); font-size: 24px; font-weight: 600; letter-spacing: -.08em; }
+.reader-file-card span { font: 10px var(--vp-font-family-mono); }
+.reader-file-card svg { display: block; width: 100%; height: 118px; margin: 8px 0; }
+.reader-file-card > span { display: block; padding-top: 10px; border-top: 1px solid var(--archive-line); }
+.reader-directory { border-top: 1px solid var(--archive-line); }
+.reader-directory summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; font-size: 12px; cursor: pointer; list-style: none; }
+.reader-directory summary::-webkit-details-marker { display: none; }
+.reader-directory summary > span { color: var(--archive-accent); font: 11px var(--vp-font-family-mono); }
+.reader-directory summary > span::after { content: ' ＋'; }
+.reader-directory[open] summary > span::after { content: ' −'; }
+.reader-directory nav { display: flex; flex-direction: column; padding-bottom: 15px; }
+.reader-directory nav a { display: block; padding: 7px 10px; border-left: 1px solid var(--archive-line); font-size: 12px; line-height: 1.7; color: var(--vp-c-text-2); overflow-wrap: anywhere; }
+.reader-directory nav a.nested { padding-left: 20px; font-size: 11px; }
+.reader-directory nav a:hover, .reader-directory nav a[aria-current="page"] { border-left-color: var(--archive-accent); background: var(--vp-c-brand-soft); color: var(--archive-accent); }
+.reader-directory nav small { display: block; margin-bottom: 3px; font: 10px var(--vp-font-family-mono); color: var(--archive-muted); }
+.reader-directory nav > span { padding: 8px 10px; font-size: 12px; color: var(--archive-muted); }
+.reader-document { min-width: 0; padding: 30px 42px 36px; border: 1px solid var(--archive-line); border-top: 2px solid var(--archive-signal); background: var(--vp-c-bg-elv); box-shadow: 4px 4px 0 var(--archive-surface); scroll-margin-top: 20px; }
+.reader-document-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; padding-bottom: 18px; border-bottom: 1px solid var(--archive-line); color: var(--archive-muted); font: 11px var(--vp-font-family-mono); }
+.reader-barcode { width: 54px; height: 17px; background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 3px, currentColor 3px 5px, transparent 5px 7px); opacity: .55; }
+html[data-blog-theme="archive"] .reader-document .vp-doc h1 { font-size: clamp(26px, 2.8vw, 36px); line-height: 1.5; letter-spacing: -.03em; }
+html[data-blog-theme="archive"] .reader-document .vp-doc h2 { font-size: 23px; }
+html[data-blog-theme="archive"] .reader-document .vp-doc :is(h2, h3) { scroll-margin-top: 24px; }
+.reader-pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--archive-line); }
+.reader-pager a { font-size: 14px; line-height: 1.8; padding: 12px; border: 1px solid var(--archive-line); }
+.reader-pager a:hover { background: var(--vp-c-brand-soft); border-color: var(--archive-accent); }
+.reader-pager small { display: block; margin-bottom: 8px; color: var(--archive-accent); font: 11px var(--vp-font-family-mono); }
+.reader-comments { margin-top: 38px; padding-top: 24px; border-top: 1px solid var(--archive-line); }
+.reader-comments > .archive-eyebrow { margin-bottom: 20px; }
+.reader-updated { margin-top: 30px; color: var(--archive-muted); font: 11px var(--vp-font-family-mono); }
+.archive-reader .archive-footer { margin-top: 36px; }
+@media (prefers-reduced-motion: no-preference) {
+  .reader-document { animation: reader-open 420ms cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes reader-open { from { opacity: .3; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+}
+@media (max-width: 960px) {
+  .reader-workspace { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; }
+  .reader-file-card { width: 145px; }
+  .reader-document { padding: 25px; }
+}
+@media (max-width: 680px) {
+  .reader-toolbar { gap: 14px; flex-wrap: wrap; padding: 12px 0; font-size: 11px; }
+  .reader-mode { display: none; }
+  .reader-workspace { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 18px; }
+  .reader-rail { position: static; max-height: none; padding: 0; }
+  .reader-file-card { display: none; }
+  .reader-directory nav { max-height: 180px; overflow-y: auto; }
+  .reader-neighbors { display: none; }
+  .reader-document { padding: 22px 18px; box-shadow: 2px 2px 0 var(--archive-surface); }
+  .reader-document-label { margin-bottom: 22px; font-size: 10px; }
+  .reader-pager { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  html[data-blog-theme="archive"] .reader-document .vp-doc div[class*="language-"] { margin-left: -8px; margin-right: -8px; }
+  .archive-reader .archive-nav nav { gap: 10px; font-size: 12px; }
+}

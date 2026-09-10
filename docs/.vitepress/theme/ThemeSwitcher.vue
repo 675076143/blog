@@ -1,30 +1,7 @@
 <script setup>
-import { onMounted, ref } from "vue";
-
-const themes = [
-  { id: "minecraft", label: "MC", title: "Minecraft" },
-  { id: "terminal", label: ">_", title: "Terminal" },
-  { id: "mario", label: "M", title: "Mario" },
-  { id: "zelda", label: "Z", title: "Hyrule Adventure" },
-  { id: "tiga", label: "T", title: "Tiga Light" },
-];
-
-const active = ref("minecraft");
-
-function applyTheme(theme) {
-  active.value = theme;
-  document.documentElement.dataset.blogTheme = theme;
-  localStorage.setItem("blog-theme", theme);
-}
-
-onMounted(() => {
-  const requested = new URLSearchParams(location.search).get("theme");
-  const saved = localStorage.getItem("blog-theme");
-  const initial = themes.some(({ id }) => id === requested)
-    ? requested
-    : themes.some(({ id }) => id === saved) ? saved : "minecraft";
-  applyTheme(initial);
-});
+import { onMounted } from "vue";
+import { themes, activeTheme as active, applyTheme, initializeTheme } from './useBlogTheme.js';
+onMounted(initializeTheme);
 </script>
 
 <template>

@@ -22,10 +22,23 @@ const posts = [
 ];
 
 export default {
+  vite: {
+    plugins: [{
+      name: 'giscus-theme-cors',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (/^\/giscus\/archive-(light|dark)\.css(?:\?|$)/.test(req.url || '')) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+          }
+          next();
+        });
+      },
+    }],
+  },
   title: "ROBIN.EXE",
   description: "Linux、后端工程与折腾记录",
   lang: "zh-CN",
-  head: [["script", {}, "try{document.documentElement.dataset.blogTheme=localStorage.getItem('blog-theme')||'minecraft'}catch(e){}"]],
+  head: [["script", {}, "(()=>{let t='archive';try{const a=['archive','minecraft','terminal','mario','zelda','tiga'];const q=new URLSearchParams(location.search).get('theme');const s=localStorage.getItem('blog-theme');t=a.includes(q)?q:a.includes(s)?s:t}catch(e){}document.documentElement.dataset.blogTheme=t})()"]],
   lastUpdated: true,
   cleanUrls: true,
   themeConfig: {
@@ -35,7 +48,7 @@ export default {
       { text: "BLOG", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },
       { text: "ABOUT", link: "/about" },
     ],
-    outline: { label: "本页地图", level: [2, 3] },
+    outline: { label: "本页索引", level: [2, 3] },
     lastUpdatedText: "最后更新",
     docFooter: { prev: "上一条记录", next: "下一条记录" },
     returnToTopLabel: "返回顶部",
