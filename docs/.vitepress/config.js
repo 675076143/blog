@@ -56,6 +56,13 @@ export default {
     darkModeSwitchLabel: "切换配色",
     sidebar: [
       {
+        text: "World",
+        collapsed: false,
+        items: [
+          { text: "欢迎来服务器玩", link: "/programming/huan-ying-lai-fu-wu-qi-wan" },
+        ],
+      },
+      {
         text: "Self-host",
         collapsed: true,
         items: [
