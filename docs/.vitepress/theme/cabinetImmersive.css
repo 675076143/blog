@@ -1,0 +1,72 @@
+/* Exhibit first. Text is edge furniture, and the complete index opens on demand. */
+.archive-home.archive-immersive { width: 100%; max-width: none; padding: 0; }
+.archive-immersive > .archive-nav { position: absolute; top: 30px; left: 40px; right: 40px; z-index: 5; min-height: 0; padding: 0; border: 0; }
+.archive-immersive .archive-nav nav { gap: 24px; }
+.archive-immersive .archive-brand small { font-size: 9px; }
+.archive-immersive .archive-appearance { border-color: transparent; }
+.archive-immersive .archive-nav .current { display: none; }
+.archive-immersive .cabinet { position: relative; min-height: 720px; height: 100svh; padding: 0; overflow: hidden; }
+.cabinet-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.archive-immersive .cabinet-workspace { position: absolute; inset: 0; display: block; border: 0; background: transparent; }
+.archive-immersive .cabinet-stage,
+.archive-immersive .cabinet-stage.three-ready { height: 100%; width: 100%; background: radial-gradient(ellipse at 40% 40%, var(--vp-c-bg-elv), var(--archive-surface) 95%); }
+.archive-immersive .cabinet-toolbar { position: absolute; left: 40px; top: 120px; right: 40px; z-index: 4; border: 0; align-items: start; }
+.archive-immersive .cabinet-toolbar nav { gap: 20px; }
+.archive-immersive .cabinet-toolbar button { min-height: 40px; font-size: 12px; }
+.archive-immersive .cabinet-toolbar > span { margin-top: 13px; font-size: 10px; }
+.archive-immersive .cabinet-coordinates { top: 190px; left: 40px; right: 40px; font-size: 10px; opacity: .6; }
+.archive-immersive .cabinet-stage-bottom { left: 40px; right: auto; bottom: 162px; font-size: 10px; }
+.archive-immersive .cabinet-stage-bottom > span:last-child { display: none; }
+.archive-immersive .cabinet-preview { position: absolute; bottom: 150px; left: 40px; z-index: 4; width: 220px; border: 0; padding: 0; background: none; }
+.archive-immersive .cabinet-idle .archive-eyebrow { font-size: 10px; }
+.cabinet-idle-action { display: flex; align-items: center; gap: 32px; padding: 8px 0; min-height: 44px; font-size: 22px !important; font-weight: 450; }
+.cabinet-idle-action span { color: var(--archive-accent); }
+.archive-immersive .cabinet:not(.has-extracted) .cabinet-stage-bottom { display: none; }
+.archive-immersive .cabinet.has-extracted .cabinet-preview { left: auto; right: 5vw; top: 42%; bottom: auto; width: min(300px, 27vw); }
+.archive-immersive .cabinet-detail { padding: 20px; background: color-mix(in srgb, var(--vp-c-bg) 87%, transparent); border-left: 1px solid var(--archive-line); }
+.archive-immersive .cabinet-detail-category { margin-top: 22px; font-size: 11px; }
+.archive-immersive .cabinet-detail h2 { margin: 12px 0 16px; font-size: clamp(19px, 1.7vw, 25px); line-height: 1.6; }
+.archive-immersive .cabinet-read { margin-top: 20px; border: 0; border-top: 1px solid var(--archive-line); background: transparent; padding: 12px 0 0; font-size: 13px !important; }
+.cabinet-excerpt { margin: 16px 0; font-size: 12px; }
+.cabinet-excerpt summary { cursor: pointer; color: var(--archive-muted); padding: 6px 0; }
+.cabinet-excerpt p { max-height: 130px; overflow-y: auto; margin-top: 8px; font-size: 13px; }
+.archive-immersive .cabinet-pagination { position: absolute; left: 40px; right: 40px; bottom: 78px; z-index: 4; margin: 0; font-size: 10px; }
+.archive-immersive .cabinet-pagination > div { gap: 14px; }
+.archive-immersive .cabinet-pagination button { border: 0; }
+.archive-immersive .cabinet-file-index { position: absolute; bottom: 77px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; z-index: 4; margin: 0; }
+.archive-immersive .cabinet-file-index button { flex-direction: column; justify-content: end; gap: 8px; width: 40px; min-height: 46px; padding: 0 0 8px; border: 0; }
+.archive-immersive .cabinet-file-index button::before { content: ''; width: 1px; height: 12px; background: var(--archive-muted); transition: height .2s, background .2s; }
+.archive-immersive .cabinet-file-index button[aria-pressed="true"]::before { height: 26px; width: 2px; background: var(--archive-accent); }
+.archive-immersive .cabinet-file-index button > span:first-child { color: var(--archive-muted); font-size: 9px; }
+.archive-immersive > .archive-footer { position: absolute; top: max(670px, calc(100svh - 50px)); left: 40px; right: 360px; z-index: 4; margin: 0; padding: 0; border: 0; font-size: 10px; }
+.archive-index-dialog { width: min(1050px, calc(100vw - 48px)); max-height: 85svh; margin: auto; padding: 36px; border: 1px solid var(--archive-line); background: var(--vp-c-bg); color: var(--vp-c-text-1); box-shadow: 0 25px 100px #0003; overflow-y: auto; }
+.archive-index-dialog::backdrop { background: #17211666; }
+.archive-index-dialog .archive-section-heading { border-top: 0; padding-top: 0; }
+.archive-index-close { float: right; position: sticky; top: 0; z-index: 3; padding: 10px 12px; min-height: 44px; background: var(--vp-c-bg); border: 1px solid var(--archive-line); font-size: 12px; }
+.archive-index-dialog .archive-categories { top: 0; }
+@media (max-width: 680px) {
+  .archive-immersive > .archive-nav { top: 20px; left: 20px; right: 20px; gap: 8px; }
+  .archive-immersive .archive-brand { font-size: 18px; }
+  .archive-immersive .archive-nav nav { width: auto; gap: 12px; margin-left: auto; font-size: 11px; }
+  .archive-immersive .archive-nav nav > a[href="https://github.com/675076143"] { display: none; }
+  .archive-immersive .archive-brand small { display: none; }
+  .archive-immersive .archive-mark { width: 32px; height: 32px; font-size: 32px; }
+  .archive-immersive .cabinet { min-height: 740px; }
+  .archive-immersive .cabinet-toolbar { top: 92px; left: 20px; right: 20px; }
+  .archive-immersive .cabinet-toolbar nav { gap: 12px; }
+  .archive-immersive .cabinet-toolbar button { font-size: 11px; }
+  .archive-immersive .cabinet-coordinates { top: 165px; left: 20px; right: 20px; }
+  .archive-immersive .cabinet-preview { left: 20px; bottom: 172px; }
+  .archive-immersive .cabinet.has-extracted .cabinet-preview { top: auto; bottom: 155px; left: 20px; right: 20px; width: auto; }
+  .archive-immersive .cabinet-detail { padding: 14px 18px; }
+  .archive-immersive .cabinet-detail-category, .archive-immersive .cabinet-date { display: none; }
+  .archive-immersive .cabinet-detail h2 { font-size: 18px; margin: 10px 0; }
+  .archive-immersive .cabinet-read { margin-top: 10px; }
+  .archive-immersive .cabinet-stage-bottom { display: none; }
+  .archive-immersive .cabinet-pagination { left: 20px; right: 20px; bottom: 58px; }
+  .archive-immersive .cabinet-file-index { bottom: 112px; gap: 3px; }
+  .archive-immersive > .archive-footer { display: none; }
+  .archive-index-dialog { width: calc(100vw - 24px); max-height: 90svh; padding: 20px; }
+  .archive-index-dialog .archive-section-heading h2 { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) { .archive-immersive .cabinet-file-index button::before { transition: none; } }

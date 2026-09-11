@@ -1,11 +1,14 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import ArchiveCabinet from './ArchiveCabinet.vue'
 import ArchiveNav from './ArchiveNav.vue'
 import { archiveEntries } from './archiveEntries.js'
 import { useData } from 'vitepress'
 const { theme } = useData()
 const selected = ref('All')
+const indexDialog = ref(null)
+function openIndex() { if (!indexDialog.value.open) indexDialog.value.showModal() }
+onMounted(() => { if (location.hash === '#archive-index') openIndex() })
 const groups = computed(() => theme.value.sidebar)
 const entries = computed(() => archiveEntries(groups.value))
 const visibleEntries = computed(() => entries.value.filter(post => selected.value === 'All' || post.category === selected.value))
@@ -18,13 +21,16 @@ const descriptions = {
 </script>
 
 <template>
-  <div class="archive-home">
-    <a class="archive-skip" href="#archive-index">跳转到文章索引</a>
-    <ArchiveNav />
+  <div class="archive-home archive-immersive">
+    <button class="archive-skip" type="button" @click="openIndex">打开文章索引</button>
+    <ArchiveNav overlay @open-index="openIndex" />
 
     <main id="main-content">
       <ArchiveCabinet :entries="entries" :groups="groups" />
 
+    </main>
+    <dialog ref="indexDialog" class="archive-index-dialog" aria-labelledby="archive-index-title" @click="event => { if (event.target === indexDialog) indexDialog.close() }">
+      <button type="button" class="archive-index-close" @click="indexDialog.close()" aria-label="关闭文章索引">关闭 ×</button>
       <section id="archive-index" class="archive-index" aria-labelledby="archive-index-title">
         <div class="archive-section-heading"><div><span class="archive-eyebrow">INDEX / 目录</span><h2 id="archive-index-title">研究档案<span> / {{ String(entries.length).padStart(2, '0') }}</span></h2></div><p>从问题出发，沿着线索往下读。</p></div>
         <div class="archive-catalog">
@@ -40,7 +46,7 @@ const descriptions = {
           </div>
         </div>
       </section>
-    </main>
-    <footer class="archive-footer"><span>ROBIN.EXE <span class="archive-footer-slash">/</span> 个人研究档案</span><span>保持好奇，持续构建。</span><a href="#main-content">返回顶部 ↑</a></footer>
+    </dialog>
+    <footer class="archive-footer"><span>ROBIN.EXE <span class="archive-footer-slash">/</span> 个人研究档案</span><button type="button" @click="openIndex">全部索引 ↗</button></footer>
   </div>
 </template>
