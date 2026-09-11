@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import ArchiveCabinet from './ArchiveCabinet.vue'
 import ArchiveNav from './ArchiveNav.vue'
+import { data as postDetails } from './archivePosts.data.mjs'
 import { archiveEntries } from './archiveEntries.js'
 import { useData } from 'vitepress'
 const { theme } = useData()
@@ -10,7 +11,7 @@ const indexDialog = ref(null)
 function openIndex() { if (!indexDialog.value.open) indexDialog.value.showModal() }
 onMounted(() => { if (location.hash === '#archive-index') openIndex() })
 const groups = computed(() => theme.value.sidebar)
-const entries = computed(() => archiveEntries(groups.value))
+const entries = computed(() => archiveEntries(groups.value, postDetails))
 const visibleEntries = computed(() => entries.value.filter(post => selected.value === 'All' || post.category === selected.value))
 const descriptions = {
   'Self-host': '本地模型、媒体服务与个人基础设施',
@@ -26,7 +27,7 @@ const descriptions = {
     <ArchiveNav overlay @open-index="openIndex" />
 
     <main id="main-content">
-      <ArchiveCabinet :entries="entries" :groups="groups" />
+      <ArchiveCabinet :entries="entries" />
 
     </main>
     <dialog ref="indexDialog" class="archive-index-dialog" aria-labelledby="archive-index-title" @click="event => { if (event.target === indexDialog) indexDialog.close() }">
@@ -47,6 +48,6 @@ const descriptions = {
         </div>
       </section>
     </dialog>
-    <footer class="archive-footer"><span>ROBIN.EXE <span class="archive-footer-slash">/</span> 个人研究档案</span><button type="button" @click="openIndex">全部索引 ↗</button></footer>
+    <footer class="archive-footer"><span>ROBIN <span class="archive-footer-slash">/</span> 私人档案</span><button type="button" @click="openIndex">全部索引 ↗</button></footer>
   </div>
 </template>

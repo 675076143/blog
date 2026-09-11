@@ -7,7 +7,7 @@ function openIndex(event) { if (props.overlay) { event.preventDefault(); emit('o
 </script>
 <template>
   <header class="archive-nav">
-    <a class="archive-brand" href="/" aria-label="ROBIN.EXE 首页"><span class="archive-mark" aria-hidden="true">r<span>.</span></span><span>ROBIN.EXE<small>PERSONAL RESEARCH ARCHIVE</small></span></a>
+    <a class="archive-brand" href="/" aria-label="ROBIN 首页"><span class="archive-wordmark">ROBIN</span><span class="archive-brand-caption">私人档案</span></a>
     <nav aria-label="主导航">
       <a class="current" href="/">档案柜 <span>↗</span></a>
       <a href="/#archive-index" @click="openIndex">索引</a>

@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useData } from 'vitepress'
-const props = defineProps({ files: { type: Array, required: true }, selected: { type: String, default: null } })
-const emit = defineEmits(['pick', 'ready'])
+const props = defineProps({ files: { type: Array, required: true }, selected: { type: String, default: null }, focus: { type: Number, default: 0 } })
+const emit = defineEmits(['pick', 'ready', 'hover', 'browse'])
 const { isDark } = useData()
 const canvas = ref(null)
 let engine, intersection, resizeObserver, preference, stopped = false, visible = true
@@ -13,8 +13,9 @@ onMounted(async () => {
   try {
     const { createCabinetScene } = await import('./cabinetScene.js')
     if (stopped) return
-    engine = createCabinetScene(canvas.value, { onPick: link => emit('pick', link), onFailure: fallback })
+    engine = createCabinetScene(canvas.value, { onPick: link => emit('pick', link), onFailure: fallback, onHover: link => emit('hover', link), onBrowse: direction => emit('browse', direction) })
     engine.setFiles(props.files)
+    engine.setFocus(props.focus)
     engine.setSelected(props.selected)
     engine.setDark(isDark.value)
     preference = matchMedia('(prefers-reduced-motion: reduce)')
@@ -34,8 +35,9 @@ onMounted(async () => {
     fallback()
   }
 })
-watch(() => props.files, files => { engine?.setFiles(files); engine?.setSelected(props.selected) })
+watch(() => props.files, files => { engine?.setFiles(files); engine?.setFocus(props.focus); engine?.setSelected(props.selected) })
 watch(() => props.selected, link => engine?.setSelected(link))
+watch(() => props.focus, value => engine?.setFocus(value))
 watch(isDark, value => engine?.setDark(value))
 onUnmounted(() => {
   stopped = true

@@ -1,7 +1,7 @@
 <template>
 <div class="pixel-home">
   <nav class="craft-nav" aria-label="主导航">
-    <a class="craft-brand" href="/"><span class="brand-block"></span> ROBIN.EXE</a>
+    <a class="craft-brand" href="/"><span class="brand-block"></span> ROBIN</a>
     <div><a href="/programming/gei-llm-jian-yi-ge-zhi-shi-ku">BLOG</a><a href="/about">ABOUT</a><a href="https://github.com/675076143">GITHUB</a></div>
   </nav>
   <div class="craft-hero">

@@ -35,14 +35,14 @@ export default {
       },
     }],
   },
-  title: "ROBIN.EXE",
+  title: "Robin · 私人档案",
   description: "Linux、后端工程与折腾记录",
   lang: "zh-CN",
   head: [["script", {}, "(()=>{let t='archive';try{const a=['archive','minecraft','terminal','mario','zelda','tiga'];const q=new URLSearchParams(location.search).get('theme');const s=localStorage.getItem('blog-theme');t=a.includes(q)?q:a.includes(s)?s:t}catch(e){}document.documentElement.dataset.blogTheme=t})()"]],
   lastUpdated: true,
   cleanUrls: true,
   themeConfig: {
-    siteTitle: "ROBIN.EXE",
+    siteTitle: "ROBIN",
     nav: [
       { text: "HOME", link: "/" },
       { text: "BLOG", link: "/programming/gei-llm-jian-yi-ge-zhi-shi-ku" },

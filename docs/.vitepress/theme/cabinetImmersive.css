@@ -1,72 +1,135 @@
-/* Exhibit first. Text is edge furniture, and the complete index opens on demand. */
+/* Keep the exhibit dominant; text appears when a file is selected. */
 .archive-home.archive-immersive { width: 100%; max-width: none; padding: 0; }
-.archive-immersive > .archive-nav { position: absolute; top: 30px; left: 40px; right: 40px; z-index: 5; min-height: 0; padding: 0; border: 0; }
+.archive-immersive > .archive-nav { position: absolute; top: max(24px, env(safe-area-inset-top)); left: 40px; right: 40px; z-index: 5; min-height: 0; padding: 0; border: 0; }
 .archive-immersive .archive-nav nav { gap: 24px; }
-.archive-immersive .archive-brand small { font-size: 9px; }
-.archive-immersive .archive-appearance { border-color: transparent; }
-.archive-immersive .archive-nav .current { display: none; }
-.archive-immersive .cabinet { position: relative; min-height: 720px; height: 100svh; padding: 0; overflow: hidden; }
+.archive-immersive .archive-nav nav > a { display: inline-flex; align-items: center; min-height: 44px; }
+.archive-immersive .archive-brand small,
+.archive-immersive .archive-nav nav .current,
+.archive-immersive > .archive-footer { display: none; }
+.archive-immersive .archive-appearance { border-color: transparent; min-width: 44px; min-height: 44px; }
+.archive-immersive .cabinet { position: relative; min-height: 480px; height: 100svh; padding: 0; overflow: hidden; background: var(--archive-surface); }
 .cabinet-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.archive-immersive .cabinet-workspace { position: absolute; inset: 0; display: block; border: 0; background: transparent; }
+.archive-immersive .cabinet-workspace { position: absolute; inset: 0; display: block; border: 0; background: radial-gradient(ellipse at 40% 40%, var(--vp-c-bg-elv), var(--archive-surface) 95%); }
 .archive-immersive .cabinet-stage,
-.archive-immersive .cabinet-stage.three-ready { height: 100%; width: 100%; background: radial-gradient(ellipse at 40% 40%, var(--vp-c-bg-elv), var(--archive-surface) 95%); }
-.archive-immersive .cabinet-toolbar { position: absolute; left: 40px; top: 120px; right: 40px; z-index: 4; border: 0; align-items: start; }
-.archive-immersive .cabinet-toolbar nav { gap: 20px; }
-.archive-immersive .cabinet-toolbar button { min-height: 40px; font-size: 12px; }
-.archive-immersive .cabinet-toolbar > span { margin-top: 13px; font-size: 10px; }
-.archive-immersive .cabinet-coordinates { top: 190px; left: 40px; right: 40px; font-size: 10px; opacity: .6; }
-.archive-immersive .cabinet-stage-bottom { left: 40px; right: auto; bottom: 162px; font-size: 10px; }
-.archive-immersive .cabinet-stage-bottom > span:last-child { display: none; }
-.archive-immersive .cabinet-preview { position: absolute; bottom: 150px; left: 40px; z-index: 4; width: 220px; border: 0; padding: 0; background: none; }
-.archive-immersive .cabinet-idle .archive-eyebrow { font-size: 10px; }
-.cabinet-idle-action { display: flex; align-items: center; gap: 32px; padding: 8px 0; min-height: 44px; font-size: 22px !important; font-weight: 450; }
-.cabinet-idle-action span { color: var(--archive-accent); }
-.archive-immersive .cabinet:not(.has-extracted) .cabinet-stage-bottom { display: none; }
+.archive-immersive .cabinet-stage.three-ready { height: 100%; width: 100%; background: transparent; }
+.archive-immersive .cabinet-preview { position: absolute; bottom: 100px; left: 40px; z-index: 4; width: 180px; border: 0; padding: 0; background: none; }
+.cabinet-idle-action { display: flex; align-items: center; gap: 24px; padding: 8px 0; min-height: 44px; font-size: 14px !important; font-weight: 450; }
+.cabinet-idle-action span { color: var(--archive-accent); font-size: 22px; }
 .archive-immersive .cabinet.has-extracted .cabinet-preview { left: auto; right: 5vw; top: 42%; bottom: auto; width: min(300px, 27vw); }
-.archive-immersive .cabinet-detail { padding: 20px; background: color-mix(in srgb, var(--vp-c-bg) 87%, transparent); border-left: 1px solid var(--archive-line); }
-.archive-immersive .cabinet-detail-category { margin-top: 22px; font-size: 11px; }
-.archive-immersive .cabinet-detail h2 { margin: 12px 0 16px; font-size: clamp(19px, 1.7vw, 25px); line-height: 1.6; }
-.archive-immersive .cabinet-read { margin-top: 20px; border: 0; border-top: 1px solid var(--archive-line); background: transparent; padding: 12px 0 0; font-size: 13px !important; }
-.cabinet-excerpt { margin: 16px 0; font-size: 12px; }
-.cabinet-excerpt summary { cursor: pointer; color: var(--archive-muted); padding: 6px 0; }
-.cabinet-excerpt p { max-height: 130px; overflow-y: auto; margin-top: 8px; font-size: 13px; }
-.archive-immersive .cabinet-pagination { position: absolute; left: 40px; right: 40px; bottom: 78px; z-index: 4; margin: 0; font-size: 10px; }
-.archive-immersive .cabinet-pagination > div { gap: 14px; }
-.archive-immersive .cabinet-pagination button { border: 0; }
-.archive-immersive .cabinet-file-index { position: absolute; bottom: 77px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; z-index: 4; margin: 0; }
-.archive-immersive .cabinet-file-index button { flex-direction: column; justify-content: end; gap: 8px; width: 40px; min-height: 46px; padding: 0 0 8px; border: 0; }
-.archive-immersive .cabinet-file-index button::before { content: ''; width: 1px; height: 12px; background: var(--archive-muted); transition: height .2s, background .2s; }
-.archive-immersive .cabinet-file-index button[aria-pressed="true"]::before { height: 26px; width: 2px; background: var(--archive-accent); }
-.archive-immersive .cabinet-file-index button > span:first-child { color: var(--archive-muted); font-size: 9px; }
-.archive-immersive > .archive-footer { position: absolute; top: max(670px, calc(100svh - 50px)); left: 40px; right: 360px; z-index: 4; margin: 0; padding: 0; border: 0; font-size: 10px; }
+.archive-immersive .cabinet-detail { position: relative; padding: 20px; background: color-mix(in srgb, var(--vp-c-bg) 78%, transparent); border: 1px solid var(--archive-line); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 var(--glass-edge), 0 12px 32px #10151008; }
+.archive-immersive .cabinet-detail-top { height: 24px; }
+.archive-immersive .cabinet-detail-top button { min-width: 44px; min-height: 44px; font-size: 22px; }
+.archive-immersive .cabinet-detail h2 { margin: 12px 0; font-size: clamp(18px, 1.5vw, 23px); line-height: 1.5; }
+.archive-immersive .cabinet-read { margin-top: 12px; border: 0; border-top: 1px solid var(--archive-line); background: transparent; padding: 8px 0 0; font-size: 13px !important; }
+.cabinet-controls { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 4; display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; width: min(460px, calc(100% - 160px)); }
+.cabinet-turn { min-width: 44px; min-height: 44px; font-size: 20px; }
+.cabinet-turn:hover:not(:disabled) { color: var(--archive-accent); }
+.archive-immersive .cabinet-file-index { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0; }
+.archive-immersive .cabinet-file-index button { flex: 1; justify-content: center; max-width: 44px; min-height: 44px; padding: 0; border: 0; }
+.archive-immersive .cabinet-file-index button::before { content: ''; width: 2px; height: 12px; background: var(--archive-muted); transition: height .2s, background .2s; }
+.archive-immersive .cabinet-file-index button[aria-pressed="true"]::before { height: 26px; background: var(--archive-accent); }
+.archive-immersive .cabinet-file-index button > span { display: none; }
+.cabinet-counter { grid-column: 1 / -1; text-align: center; font: 10px/18px var(--vp-font-family-mono); color: var(--archive-muted); }
 .archive-index-dialog { width: min(1050px, calc(100vw - 48px)); max-height: 85svh; margin: auto; padding: 36px; border: 1px solid var(--archive-line); background: var(--vp-c-bg); color: var(--vp-c-text-1); box-shadow: 0 25px 100px #0003; overflow-y: auto; }
 .archive-index-dialog::backdrop { background: #17211666; }
 .archive-index-dialog .archive-section-heading { border-top: 0; padding-top: 0; }
 .archive-index-close { float: right; position: sticky; top: 0; z-index: 3; padding: 10px 12px; min-height: 44px; background: var(--vp-c-bg); border: 1px solid var(--archive-line); font-size: 12px; }
 .archive-index-dialog .archive-categories { top: 0; }
+
 @media (max-width: 680px) {
-  .archive-immersive > .archive-nav { top: 20px; left: 20px; right: 20px; gap: 8px; }
-  .archive-immersive .archive-brand { font-size: 18px; }
-  .archive-immersive .archive-nav nav { width: auto; gap: 12px; margin-left: auto; font-size: 11px; }
+  .archive-immersive > .archive-nav { top: max(12px, env(safe-area-inset-top)); left: 16px; right: 16px; gap: 8px; }
+  .archive-immersive .archive-brand { font-size: 15px; gap: 8px; }
+  .archive-immersive .archive-nav nav { width: auto; gap: 12px; margin-left: auto; font-size: 12px; }
   .archive-immersive .archive-nav nav > a[href="https://github.com/675076143"] { display: none; }
-  .archive-immersive .archive-brand small { display: none; }
-  .archive-immersive .archive-mark { width: 32px; height: 32px; font-size: 32px; }
-  .archive-immersive .cabinet { min-height: 740px; }
-  .archive-immersive .cabinet-toolbar { top: 92px; left: 20px; right: 20px; }
-  .archive-immersive .cabinet-toolbar nav { gap: 12px; }
-  .archive-immersive .cabinet-toolbar button { font-size: 11px; }
-  .archive-immersive .cabinet-coordinates { top: 165px; left: 20px; right: 20px; }
-  .archive-immersive .cabinet-preview { left: 20px; bottom: 172px; }
-  .archive-immersive .cabinet.has-extracted .cabinet-preview { top: auto; bottom: 155px; left: 20px; right: 20px; width: auto; }
-  .archive-immersive .cabinet-detail { padding: 14px 18px; }
-  .archive-immersive .cabinet-detail-category, .archive-immersive .cabinet-date { display: none; }
-  .archive-immersive .cabinet-detail h2 { font-size: 18px; margin: 10px 0; }
-  .archive-immersive .cabinet-read { margin-top: 10px; }
-  .archive-immersive .cabinet-stage-bottom { display: none; }
-  .archive-immersive .cabinet-pagination { left: 20px; right: 20px; bottom: 58px; }
-  .archive-immersive .cabinet-file-index { bottom: 112px; gap: 3px; }
-  .archive-immersive > .archive-footer { display: none; }
+  .archive-immersive .archive-mark { width: 28px; height: 32px; font-size: 30px; }
+  /* Reserve a stable area for the title and controls, so extraction cannot cover them. */
+  .archive-immersive .cabinet-stage,
+  .archive-immersive .cabinet-stage.three-ready { position: absolute; top: 112px; height: calc(100% - 310px - env(safe-area-inset-bottom)); }
+  .archive-immersive .cabinet-preview,
+  .archive-immersive .cabinet.has-extracted .cabinet-preview { left: 16px; right: 16px; bottom: calc(112px + env(safe-area-inset-bottom)); top: auto; width: auto; }
+  .archive-immersive .cabinet-idle-action { margin: auto; }
+  .archive-immersive .cabinet-detail { display: grid; grid-template-columns: minmax(0, 1fr) 64px; align-items: center; gap: 0 12px; padding: 10px 14px; }
+  .archive-immersive .cabinet-detail-top { position: absolute; right: 8px; top: -48px; height: 44px; }
+  .archive-immersive .cabinet-detail-top > span { display: none; }
+  .archive-immersive .cabinet-detail-top button { margin: 0; background: var(--vp-c-bg-elv); border: 1px solid var(--archive-line); }
+  .archive-immersive .cabinet-detail h2 { font-size: 16px; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .archive-immersive .cabinet-read { margin: 0; min-height: 48px; padding: 0; border: 0; justify-content: end; gap: 8px; }
+  .cabinet-controls { width: calc(100% - 24px); bottom: calc(44px + env(safe-area-inset-bottom)); }
   .archive-index-dialog { width: calc(100vw - 24px); max-height: 90svh; padding: 20px; }
   .archive-index-dialog .archive-section-heading h2 { font-size: 23px; }
 }
+@media (max-width: 360px) {
+  .archive-immersive .archive-brand > span:last-child { display: none; }
+}
+@media (max-height: 500px) and (min-width: 681px) {
+  .archive-immersive .cabinet { min-height: 320px; }
+  .archive-immersive > .archive-nav { top: 8px; left: 20px; right: 20px; }
+  .archive-immersive .cabinet.has-extracted .cabinet-preview { top: 30%; right: 20px; }
+  .archive-immersive .cabinet-detail { padding: 12px; }
+  .archive-immersive .cabinet-detail h2 { font-size: 16px; max-height: 72px; overflow-y: auto; }
+  .cabinet-controls { bottom: max(8px, env(safe-area-inset-bottom)); }
+}
 @media (prefers-reduced-motion: reduce) { .archive-immersive .cabinet-file-index button::before { transition: none; } }
+
+/* A continuous rack with one position per document, rather than fixed pages. */
+.cabinet-position { width: 100%; height: 44px; margin: 0; accent-color: var(--archive-accent); cursor: ew-resize; }
+.archive-immersive .cabinet-file-index { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.archive-immersive .cabinet-file-index:focus-within { bottom: 78px; left: 0; right: 0; width: auto; height: auto; max-height: 220px; padding: 8px; display: block; overflow-y: auto; clip-path: none; background: var(--vp-c-bg-elv); border: 1px solid var(--archive-line); }
+.archive-immersive .cabinet-file-index:focus-within button { width: 100%; max-width: none; padding: 8px; justify-content: start; }
+.archive-immersive .cabinet-file-index button::before { display: none; }
+.archive-immersive .cabinet-file-index:focus-within button > span { display: block; font-size: 12px; margin: 0; }
+@media (max-width: 680px) {
+  .archive-immersive .cabinet-rack { transform: scale(.8); }
+}
+/* Rows form a gallery; the controls only indicate its vertical position. */
+.cabinet-three { touch-action: none; }
+.cabinet-row-dots { display: flex; justify-content: center; min-width: 0; overflow-x: auto; }
+.cabinet-row-dots button { flex: 0 1 32px; min-width: 18px; height: 44px; display: grid; place-items: center; }
+.cabinet-row-dots button span { width: 4px; height: 4px; border-radius: 50%; background: var(--archive-muted); transition: height .25s, background .25s; }
+.cabinet-row-dots button[aria-pressed="true"] span { height: 18px; border-radius: 2px; background: var(--archive-accent); }
+.archive-immersive .cabinet-rack { transform: none; }
+.archive-immersive .cabinet-rack .cabinet-file { left: calc((var(--column) + .5) * 100% / var(--columns)); top: calc((var(--row) + .5) * 100% / var(--rows)); width: 200px; height: 278px; transform: translate(-50%, -50%) scale(.6) rotateY(-12deg); }
+.archive-immersive .cabinet-rack .cabinet-file.is-extracted { z-index: 20; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.9); }
+.archive-immersive .cabinet.has-extracted .cabinet-rack .cabinet-file:not(.is-extracted) { opacity: .35; }
+@media (max-width: 680px) {
+  .archive-immersive .cabinet-rack .cabinet-file { transform: translate(-50%, -50%) scale(.38) rotateY(-12deg); }
+  .archive-immersive .cabinet-rack .cabinet-file.is-extracted { transform: translate(-50%, -50%) scale(.65); }
+}
+@media (prefers-reduced-motion: reduce) { .cabinet-row-dots button span { transition: none; } }
+/* Stored files stand on their bottom edge, with the narrow spine facing out. */
+.archive-immersive .cabinet-rack { perspective: 1600px; }
+.archive-immersive .cabinet-rack .cabinet-file { transform: translate(-50%, -50%) scale(.62) rotateY(-58deg); transform-style: preserve-3d; }
+.archive-immersive .cabinet-rack .cabinet-spine { top: 0; left: auto; right: -16px; width: 32px; height: 100%; padding: 12px 4px; transform: rotateY(90deg); transform-origin: center; flex-direction: column; border: 1px solid var(--archive-line); background: var(--vp-c-bg-elv); }
+.archive-immersive .cabinet-rack .cabinet-spine span { writing-mode: vertical-rl; }
+.archive-immersive .cabinet-rack .cabinet-file.is-extracted { transform: translate(-50%, -50%) scale(.9) rotateY(0); }
+@media (max-width: 680px) {
+  .archive-immersive .cabinet-rack .cabinet-file { transform: translate(-50%, -50%) scale(.38) rotateY(-58deg); }
+  .archive-immersive .cabinet-rack .cabinet-file.is-extracted { transform: translate(-50%, -50%) scale(.65) rotateY(0); }
+}
+
+.cabinet-cover-title { position: absolute; left: 16px; right: 16px; top: 18px; z-index: 3; color: var(--vp-c-text-1); font-size: 15px; line-height: 1.45; font-weight: 600; overflow-wrap: anywhere; }
+.archive-immersive .cabinet-sheet-heading { visibility: hidden; }
+.archive-immersive .cabinet-optics { transform: translateY(28px) scale(.65); }
+
+.cabinet-legend li { display: flex; align-items: center; gap: 6px; }
+.cabinet-legend-swatch { width: 7px; height: 7px; flex: none; }
+.archive-immersive .cabinet-spine::after { content: ''; width: 12px; height: 18px; flex: none; background: var(--category-color); }
+.archive-immersive .cabinet-sheet-heading i { background: var(--category-color); }
+
+/* Edge furniture never changes the size of the exhibit canvas. */
+.cabinet-legend { position: absolute; z-index: 4; left: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; width: max-content; max-width: 140px; margin: 0; padding: 10px 12px; list-style: none; color: var(--vp-c-text-2); font-size: 11px; line-height: 20px; border: 1px solid var(--glass-edge); border-radius: 6px; background: linear-gradient(120deg, #ffffff24, transparent 52%, var(--glass-tint)), color-mix(in srgb, var(--vp-c-bg) 45%, transparent); -webkit-backdrop-filter: blur(14px) saturate(125%); backdrop-filter: blur(14px) saturate(125%); box-shadow: inset 0 1px 0 #ffffff45, inset 0 -1px 0 var(--glass-shade), 0 5px 16px #10151008; }
+@media (max-width: 1199px) {
+  .cabinet-legend { top: auto; bottom: max(8px, env(safe-area-inset-bottom)); left: 16px; right: 72px; transform: none; flex-direction: row; gap: 16px; width: auto; max-width: none; padding: 6px 10px; overflow-x: auto; scrollbar-width: thin; }
+  .cabinet-legend li { flex: none; white-space: nowrap; }
+  .cabinet-controls { bottom: calc(56px + env(safe-area-inset-bottom)); }
+}
+
+/* On phones, reserve the reading card only after a file is extracted. */
+@media (max-width: 680px) {
+  .archive-immersive .cabinet-stage,
+  .archive-immersive .cabinet-stage.three-ready { top: 108px; height: calc(100% - 208px - env(safe-area-inset-bottom)); }
+  .archive-immersive .cabinet:not(.has-extracted) .cabinet-preview { display: none; }
+  .archive-immersive .cabinet.has-extracted .cabinet-stage { height: calc(100% - 320px - env(safe-area-inset-bottom)); }
+  .archive-immersive .cabinet.has-extracted .cabinet-preview { bottom: calc(100px + env(safe-area-inset-bottom)); }
+  .cabinet-controls { bottom: calc(48px + env(safe-area-inset-bottom)); }
+}

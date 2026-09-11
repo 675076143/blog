@@ -3,13 +3,14 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useData } from 'vitepress'
 import ArchiveNav from './ArchiveNav.vue'
 import Comments from './Comments.vue'
+import { data as postDetails } from './archivePosts.data.mjs'
 import { archiveEntries } from './archiveEntries.js'
 import './reader.css'
 
 const { page, theme } = useData()
 const body = ref(null)
 const headings = ref([])
-const entries = computed(() => archiveEntries(theme.value.sidebar))
+const entries = computed(() => archiveEntries(theme.value.sidebar, postDetails))
 const path = computed(() => '/' + page.value.relativePath.replace(/\.md$/, ''))
 const position = computed(() => entries.value.findIndex(post => post.link === path.value))
 const record = computed(() => entries.value[position.value])
@@ -31,11 +32,11 @@ watch(() => page.value.relativePath, collectHeadings, { flush: 'post' })
   <div class="archive-home archive-reader">
     <a class="archive-skip" href="#reader-content">跳转到档案正文</a>
     <ArchiveNav />
-    <div class="reader-toolbar"><a :href="returnUrl">↙ 返回档案柜</a><span>{{ record?.category || 'Profile' }} <span aria-hidden="true">/</span> {{ record ? `FILE ${record.id}` : 'ROBIN.EXE' }}</span><span class="reader-mode">READING / 阅览</span></div>
+    <div class="reader-toolbar"><a :href="returnUrl">↙ 返回档案柜</a><span>{{ record?.category || 'Profile' }} <span aria-hidden="true">/</span> {{ record ? `FILE ${record.id}` : 'ROBIN' }}</span><span class="reader-mode">READING / 阅览</span></div>
     <div class="reader-workspace">
       <aside class="reader-rail" aria-label="档案导航">
         <div class="reader-file-card" aria-hidden="true">
-          <div><b>R / E</b><span>{{ record?.id || 'R.00' }}</span></div>
+          <div><b>R</b><span>{{ record?.id || 'R.00' }}</span></div>
           <svg viewBox="0 0 160 140" fill="none"><circle cx="80" cy="70" r="51" stroke="currentColor"/><circle cx="80" cy="70" r="36" stroke="currentColor" stroke-width="9" opacity=".2"/><path d="M80 19A51 51 0 0 1 131 70" stroke="var(--archive-signal)" stroke-width="4"/><path d="M80 45L105 70L80 95L55 70Z" stroke="currentColor"/><path d="M80 0V140M10 70H150" stroke="currentColor" opacity=".2" stroke-dasharray="2 4"/></svg>
           <span>{{ record?.category.toUpperCase() || 'PROFILE' }}</span>
         </div>
@@ -56,6 +57,6 @@ watch(() => page.value.relativePath, collectHeadings, { flush: 'post' })
         <div class="reader-comments"><Comments /></div>
       </main>
     </div>
-    <footer class="archive-footer"><span>ROBIN.EXE <span class="archive-footer-slash">/</span> 个人研究档案</span><a :href="returnUrl">归还档案 ↙</a><a href="#reader-content">返回顶部 ↑</a></footer>
+    <footer class="archive-footer"><span>ROBIN <span class="archive-footer-slash">/</span> 私人档案</span><a :href="returnUrl">归还档案 ↙</a><a href="#reader-content">返回顶部 ↑</a></footer>
   </div>
 </template>

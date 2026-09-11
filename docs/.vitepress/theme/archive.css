@@ -298,3 +298,12 @@ html.dark[data-blog-theme="archive"] {
   .archive-object, .archive-object *, .archive-object *::before { animation: none !important; transition: none !important; }
   .archive-specimen-motion { transform: none; }
 }
+
+/* Quiet wordmark shared by the cabinet and reading pages. */
+.archive-brand { gap: 12px; font-weight: 450; letter-spacing: 0; }
+.archive-wordmark { font-size: 19px; font-weight: 500; letter-spacing: .2em; line-height: 1.4; }
+.archive-brand-caption { padding-left: 12px; border-left: 1px solid var(--archive-line); color: var(--archive-muted); font-size: 10px; font-weight: 400; letter-spacing: .18em; line-height: 1.6; white-space: nowrap; }
+@media (max-width: 680px) {
+  .archive-wordmark { font-size: 17px; }
+  .archive-brand-caption { display: none; }
+}
