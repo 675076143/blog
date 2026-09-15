@@ -85,6 +85,7 @@ export default {
         text: "Linux",
         collapsed: true,
         items: [
+          { text: "把 Windows 专属的 K20 GT 歌词屏搬到 Linux", link: "/programming/mchose-k20-gt-linux-wine" },
           { text: "CachyOS 本地双席位实录", link: "/programming/cachyos-ben-di-shuang-xi-wei-shi-lu" },
           { text: "Linux HDR 折腾记", link: "/programming/linux-hdr-tale" },
           { text: "Hyprland 的 HDR 桌面为什么不发灰", link: "/programming/hyprland-hdr-bu-fa-hui-de-yuan-li" },
