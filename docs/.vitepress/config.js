@@ -87,6 +87,7 @@ export default {
         items: [
           { text: "把 Windows 专属的 K20 GT 歌词屏搬到 Linux", link: "/programming/mchose-k20-gt-linux-wine" },
           { text: "CachyOS 本地双席位实录", link: "/programming/cachyos-ben-di-shuang-xi-wei-shi-lu" },
+          { text: "Steam Deck OLED 原生库内 HDR 串流实录", link: "/programming/steam-deck-oled-steam-remote-play-hdr" },
           { text: "Linux HDR 折腾记", link: "/programming/linux-hdr-tale" },
           { text: "Hyprland 的 HDR 桌面为什么不发灰", link: "/programming/hyprland-hdr-bu-fa-hui-de-yuan-li" },
           { text: "CachyOS 游戏串流方案选型", link: "/programming/cachyos-you-xi-chuan-liu-fang-an-dui-bi" },
